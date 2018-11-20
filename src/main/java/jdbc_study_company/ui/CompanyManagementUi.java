@@ -9,10 +9,15 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.JButton;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
-public class CompanyManagementUi extends JFrame {
+public class CompanyManagementUi extends JFrame implements ActionListener {
 
 	private JPanel contentPane;
+	private JButton btnEmployeeMangement;
+	private JButton btnDepartmentManagement;
+	private JButton btnTitleManagement;
 
 	/**
 	 * Create the frame.
@@ -33,14 +38,37 @@ public class CompanyManagementUi extends JFrame {
 		contentPane.add(panel, BorderLayout.CENTER);
 		panel.setLayout(new GridLayout(0, 3, 0, 0));
 		
-		JButton btnEmployeeMangement = new JButton("사원관리");
+		btnEmployeeMangement = new JButton("사원관리");
+		btnEmployeeMangement.addActionListener(this);
 		panel.add(btnEmployeeMangement);
 		
-		JButton btnDepartmentManagement = new JButton("부서관리");
+		btnDepartmentManagement = new JButton("부서관리");
+		btnDepartmentManagement.addActionListener(this);
 		panel.add(btnDepartmentManagement);
 		
-		JButton btnTitleManagement = new JButton("직책관리");
+		btnTitleManagement = new JButton("직책관리");
+		btnTitleManagement.addActionListener(this);
 		panel.add(btnTitleManagement);
 	}
 
+	public void actionPerformed(ActionEvent e) {
+		if (e.getSource() == btnTitleManagement) {
+			do_btnTitleManagement_actionPerformed(e);
+		}
+		if (e.getSource() == btnDepartmentManagement) {
+			do_btnDepartmentManagement_actionPerformed(e);
+		}
+		if (e.getSource() == btnEmployeeMangement) {
+			do_btnEmployeeMangement_actionPerformed(e);
+		}
+	}
+	protected void do_btnEmployeeMangement_actionPerformed(ActionEvent e) {
+		//사원관리 버튼 클릭시 사원관리창띄우기
+	}
+	protected void do_btnDepartmentManagement_actionPerformed(ActionEvent e) {
+		//부서관리 버튼 클릭시 사원관리창띄우기
+	}
+	protected void do_btnTitleManagement_actionPerformed(ActionEvent e) {
+		//직책관리 버튼 클릭시 사원관리창띄우기
+	}
 }

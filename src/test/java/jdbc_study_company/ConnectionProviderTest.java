@@ -1,7 +1,5 @@
 package jdbc_study_company;
 
-import static org.junit.Assert.*;
-
 import java.sql.Connection;
 import java.sql.SQLException;
 
