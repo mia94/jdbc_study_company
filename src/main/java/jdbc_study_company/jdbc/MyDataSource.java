@@ -15,7 +15,7 @@ import java.util.Properties;
 
 public class MyDataSource {
 	//singleton pattern적용
-	private static final MyDataSource instance = new MyDataSource();//private으로 바꾸기
+	public static final MyDataSource instance = new MyDataSource();//private으로 바꾸기
 	//get set가도 get밖에 없음
 	public static MyDataSource getInstance() {
 		return instance;
@@ -37,7 +37,7 @@ public class MyDataSource {
 		}
 	}
 	
-	private MyDataSource() {//꼭 private으로 수정해야 함!
+	public MyDataSource() {//꼭 private으로 수정해야 함!
 		Properties prop = loadProperties();//import, create
 		
 		//값을 불러왔는지 확인

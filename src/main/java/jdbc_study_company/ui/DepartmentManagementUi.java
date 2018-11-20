@@ -64,13 +64,30 @@ public class DepartmentManagementUi extends JFrame {
 		panel.add(tfFloor);
 		
 		JPanel panel_2 = new JPanel();
-		contentPane.add(panel_2);
+		panel.add(panel_2);
+		panel_2.setLayout(new GridLayout(0, 3, 0, 0));
+		
+		JLabel lblNewLabel = new JLabel("");
+		panel_2.add(lblNewLabel);
+		
+		JLabel lblNewLabel_1 = new JLabel("");
+		panel_2.add(lblNewLabel_1);
 		
 		JButton btnAdd = new JButton("추가");
 		panel_2.add(btnAdd);
 		
+		JPanel panel_3 = new JPanel();
+		panel.add(panel_3);
+		panel_3.setLayout(new GridLayout(0, 3, 0, 0));
+		
 		JButton btnCancel = new JButton("취소");
-		panel_2.add(btnCancel);
+		panel_3.add(btnCancel);
+		
+		JLabel lblNewLabel_2 = new JLabel("");
+		panel_3.add(lblNewLabel_2);
+		
+		JLabel lblNewLabel_3 = new JLabel("");
+		panel_3.add(lblNewLabel_3);
 		
 		JPanel panel_1 = new JPanel();
 		contentPane.add(panel_1);
