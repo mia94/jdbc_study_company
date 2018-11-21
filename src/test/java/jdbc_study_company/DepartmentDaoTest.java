@@ -9,13 +9,16 @@ import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.BeforeClass;
+import org.junit.FixMethodOrder;
 import org.junit.Test;
+import org.junit.runners.MethodSorters;
 
 import jdbc_study_company.dao.DepartmentDao;
 import jdbc_study_company.dao.DepartmentDaoImpl;
 import jdbc_study_company.dto.Department;
 import jdbc_study_company.jdbc.LogUtil;
 
+@FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class DepartmentDaoTest {
 	static DepartmentDao deptDao;
 
@@ -49,8 +52,28 @@ public class DepartmentDaoTest {
 	public void test02insertDepartment() throws SQLException {
 		Department newDept = new Department("D006","자바",7);
 		int row = deptDao.insertDepartment(newDept);
-		LogUtil.prnLog("row : " + row);
+		LogUtil.prnLog("insert row : " + row);
 		Assert.assertEquals(1, row);
+		test01selectDepartmentByAll();
+	}
+
+	@Test
+	public void test04deleteDepartment() throws SQLException {
+		Department delDept = new Department("D006");
+//		delDept.setDeptNo("D006");
+		int row = deptDao.deleteDepartment(delDept);
+		LogUtil.prnLog("delete row : " + row);
+		Assert.assertEquals(1, row);
+		test01selectDepartmentByAll();
+	}
+	
+	@Test
+	public void test03updateDepartment() throws SQLException {
+		Department updateDept = new Department("D006","디비",7);
+		int row = deptDao.updateDepartment(updateDept);
+		LogUtil.prnLog("update row : " + row);
+		Assert.assertEquals(1, row);
+		test01selectDepartmentByAll();
 	}
 }
 

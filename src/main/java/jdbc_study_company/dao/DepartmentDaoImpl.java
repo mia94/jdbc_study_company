@@ -38,21 +38,62 @@ public class DepartmentDaoImpl implements DepartmentDao {
 	}
 
 	@Override
-	public int insertDepartment(Department department) throws SQLException {
+	public int insertDepartment(Department item) throws SQLException {
+		System.out.println("insertDepartment 실행");
 		String sql = "insert into department values(?,?,?)";
 		int row = 0;
 		try(Connection connection = ConnectionProvider.getConnection();
 				PreparedStatement pstmt = connection.prepareStatement(sql)){
-			pstmt.setString(1, department.getDeptNo());
-			pstmt.setString(2, department.getDaptName());
-			pstmt.setInt(3, department.getFloor());
+
+			pstmt.setString(1, item.getDeptNo());
+			pstmt.setString(2, item.getDaptName());
+			pstmt.setInt(3, item.getFloor());
+			LogUtil.prnLog(pstmt);
+			row = pstmt.executeUpdate();
+		}
+		return row;
+	}
+
+	@Override
+	public int deleteDepartment(Department item) throws SQLException {
+		System.out.println("deleteDepartment 실행");
+		String sql = "delete from department where deptno = ?";
+		int row = 0;
+		try(Connection conn = ConnectionProvider.getConnection();
+				PreparedStatement pstmt = conn.prepareStatement(sql)){
+			pstmt.setString(1, item.getDeptNo());
+			LogUtil.prnLog(pstmt);
+			row = pstmt.executeUpdate();
+		}
+		return row;
+	}
+
+	@Override
+	public int updateDepartment(Department item) throws SQLException {
+		System.out.println("updateDepartment 실행");
+		String sql = "update department set deptName = ? where deptno = ? ";
+		int row = 0;
+		try(Connection conn = ConnectionProvider.getConnection();
+				PreparedStatement pstmt = conn.prepareStatement(sql)){
+			pstmt.setString(1, item.getDaptName());
+			pstmt.setString(2, item.getDeptNo());
 			LogUtil.prnLog(pstmt);
 			row = pstmt.executeUpdate();
 		}
 		return row;
 	}
 	
+	
+	
 }
+
+
+
+
+
+
+
+
 
 
 

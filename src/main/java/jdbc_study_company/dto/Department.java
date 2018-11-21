@@ -15,6 +15,10 @@ public class Department {
 		this.daptName = daptName;
 		this.floor = floor;
 	}
+	
+	public Department(String deptNo) {
+		this.deptNo = deptNo;
+	}
 
 	@Override
 	public String toString() {
