@@ -12,6 +12,12 @@ public class Title {
 		this.tNo = tNo;
 		this.tName = tName;
 	}
+	
+	
+	public Title(String tNo) {
+		this.tNo = tNo;
+	}
+
 	//get set
 	public String gettNo() {
 		return tNo;

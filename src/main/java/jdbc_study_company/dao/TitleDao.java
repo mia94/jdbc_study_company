@@ -8,7 +8,7 @@ import jdbc_study_company.dto.Title;
 public interface TitleDao {
 	List<Title> selectTitleByAll() throws SQLException;
 	
-	int selectTitle(Title item);
-	int updateTitle(Title item);
-	int deleteTitle(Title item);
+	int insertTitle(Title item) throws SQLException;
+	int updateTitle(Title item) throws SQLException;
+	int deleteTitle(Title item) throws SQLException;
 }

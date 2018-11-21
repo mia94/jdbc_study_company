@@ -35,20 +35,37 @@ public class TitleDaoImpl implements TitleDao {
 	}
 
 	@Override
-	public int selectTitle(Title item) {
-		// TODO Auto-generated method stub
-		return 0;
+	public int insertTitle(Title item) throws SQLException {
+		System.out.println("insertTitle실행");
+		String sql = "insert into title values(?,?)";
+		int row = 0;
+		try(Connection conn = ConnectionProvider.getConnection();
+				PreparedStatement pstmt = conn.prepareStatement(sql)){
+			pstmt.setString(1, item.gettNo());
+			pstmt.setString(2, item.gettName());
+			LogUtil.prnLog(pstmt);
+			row = pstmt.executeUpdate();
+		}
+		return row;
+	}
+
+	@Override
+	public int deleteTitle(Title item) throws SQLException {
+		System.out.println("updateTitle실행");
+		String sql = "delete from title where deptno= ?";
+		int row = 0;
+		try(Connection conn = ConnectionProvider.getConnection();
+				PreparedStatement pstmt = conn.prepareStatement(sql)){
+			pstmt.setString(1, item.gettNo());
+			LogUtil.prnLog(pstmt);
+			row = pstmt.executeUpdate();
+		}
+		return row;
 	}
 
 	@Override
 	public int updateTitle(Title item) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	@Override
-	public int deleteTitle(Title item) {
-		// TODO Auto-generated method stub
+		System.out.println("deleteTitle실행");
 		return 0;
 	}
 	
