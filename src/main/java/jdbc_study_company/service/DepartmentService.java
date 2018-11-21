@@ -8,8 +8,8 @@ import jdbc_study_company.dto.Department;
 public class DepartmentService {
 	private DepartmentDao dao;
 	
-	/*public List<Department> selectDepartmentByAll(){
-		
-	}*/
+	public List<Department> selectDepartmentByAll(){
+		return dao.selectDepartmentByAll();
+	}
 
 }
