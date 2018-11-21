@@ -8,5 +8,7 @@ import jdbc_study_company.dto.Department;
 public interface DepartmentDao {
 	List<Department> selectDepartmentByAll();
 	
-	int insertDepartment(Department department) throws SQLException;
+	int insertDepartment(Department item) throws SQLException;
+	int deleteDepartment(Department item) throws SQLException;
+	int updateDepartment(Department item) throws SQLException;
 }
