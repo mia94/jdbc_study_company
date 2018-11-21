@@ -2,6 +2,7 @@ package jdbc_study_company;
 
 import static org.junit.Assert.*;
 
+import java.sql.SQLException;
 import java.util.List;
 
 import org.junit.AfterClass;
@@ -43,7 +44,14 @@ public class DepartmentDaoTest {
 		LogUtil.prnLog(list.toString());
 		Assert.assertNotNull(list);
 	}
-
+	
+	@Test
+	public void test02insertDepartment() throws SQLException {
+		Department newDept = new Department("D006","자바",7);
+		int row = deptDao.insertDepartment(newDept);
+		LogUtil.prnLog("row : " + row);
+		Assert.assertEquals(1, row);
+	}
 }
 
 
