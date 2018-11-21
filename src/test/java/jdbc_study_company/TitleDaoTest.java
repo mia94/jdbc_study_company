@@ -59,8 +59,12 @@ public class TitleDaoTest {
 	}
 	
 	@Test
-	public void test03deleteTitle() {
+	public void test04deleteTitle() throws SQLException {
 		Title delTitle = new Title("T006");
+		int row = titleDao.deleteTitle(delTitle);
+		LogUtil.prnLog("delete row : "+ row);
+		Assert.assertEquals(1, row);
+		test01selectTitleByAll();
 	}
 
 }
