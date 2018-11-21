@@ -51,8 +51,8 @@ public class TitleDaoImpl implements TitleDao {
 
 	@Override
 	public int deleteTitle(Title item) throws SQLException {
-		System.out.println("updateTitle실행");
-		String sql = "delete from title where deptno= ?";
+		System.out.println("deleteTitle실행");
+		String sql = "delete from title where tno= ?";
 		int row = 0;
 		try(Connection conn = ConnectionProvider.getConnection();
 				PreparedStatement pstmt = conn.prepareStatement(sql)){
