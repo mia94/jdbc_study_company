@@ -89,7 +89,7 @@ public class DepartmentManagementUi extends JFrame {
 		JLabel lblNewLabel_3 = new JLabel("");
 		panel_3.add(lblNewLabel_3);
 		
-		JPanel panel_1 = new JPanel();
+		DepartmentPanel panel_1 = new DepartmentPanel();
 		contentPane.add(panel_1);
 	}
 

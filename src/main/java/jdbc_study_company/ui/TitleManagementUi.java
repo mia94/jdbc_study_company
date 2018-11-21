@@ -62,7 +62,7 @@ public class TitleManagementUi extends JFrame {
 		JButton btnCancel = new JButton("취소");
 		panel_2.add(btnCancel);
 		
-		JPanel panel_1 = new JPanel();
+		TitlePanel panel_1 = new TitlePanel();
 		contentPane.add(panel_1);
 	}
 
