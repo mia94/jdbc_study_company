@@ -15,7 +15,34 @@ public class Department {
 		this.daptName = daptName;
 		this.floor = floor;
 	}
-	
-	
+
+	@Override
+	public String toString() {
+		return String.format("Department [%s, %s, %s]", deptNo, daptName, floor);
+	}
+	//GET SET
+	public String getDeptNo() {
+		return deptNo;
+	}
+
+	public void setDeptNo(String deptNo) {
+		this.deptNo = deptNo;
+	}
+
+	public String getDaptName() {
+		return daptName;
+	}
+
+	public void setDaptName(String daptName) {
+		this.daptName = daptName;
+	}
+
+	public int getFloor() {
+		return floor;
+	}
+
+	public void setFloor(int floor) {
+		this.floor = floor;
+	}
 	
 }
