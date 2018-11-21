@@ -59,6 +59,15 @@ public class TitleDaoTest {
 	}
 	
 	@Test
+	public void test03updateTitle() throws SQLException {
+		Title updateTitle = new Title("T006","알바");
+		int row = titleDao.updateTitle(updateTitle);
+		LogUtil.prnLog("update row : "+ row);
+		Assert.assertEquals(1, row);
+		test01selectTitleByAll();
+	}
+	
+	@Test
 	public void test04deleteTitle() throws SQLException {
 		Title delTitle = new Title("T006");
 		int row = titleDao.deleteTitle(delTitle);

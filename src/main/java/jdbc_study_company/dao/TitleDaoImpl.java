@@ -64,9 +64,18 @@ public class TitleDaoImpl implements TitleDao {
 	}
 
 	@Override
-	public int updateTitle(Title item) {
-		System.out.println("deleteTitle실행");
-		return 0;
+	public int updateTitle(Title item) throws SQLException {
+		System.out.println("updateTitle실행");
+		String sql = "update title set tname = ? where tno = ? ";
+		int row = 0;
+		try(Connection conn = ConnectionProvider.getConnection();
+				PreparedStatement pstmt = conn.prepareStatement(sql)){
+			pstmt.setString(1, item.gettName());
+			pstmt.setString(2, item.gettNo());
+			LogUtil.prnLog(pstmt);
+			row = pstmt.executeUpdate();
+		}
+		return row;
 	}
 	
 	
