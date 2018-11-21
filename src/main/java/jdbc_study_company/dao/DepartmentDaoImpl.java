@@ -43,10 +43,13 @@ public class DepartmentDaoImpl implements DepartmentDao {
 		int row = 0;
 		try(Connection connection = ConnectionProvider.getConnection();
 				PreparedStatement pstmt = connection.prepareStatement(sql)){
-//			pstmt.setString(1, department.);
-			
+			pstmt.setString(1, department.getDeptNo());
+			pstmt.setString(2, department.getDaptName());
+			pstmt.setInt(3, department.getFloor());
+			LogUtil.prnLog(pstmt);
+			row = pstmt.executeUpdate();
 		}
-		return 0;
+		return row;
 	}
 	
 }
