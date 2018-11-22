@@ -1,13 +1,15 @@
 package jdbc_study_company.dto;
 
+import java.util.Date;
+
 public class Employee {
 	private String empNo;
 	private String empName;
-	private int title;
+	private Title title;
 	private int salary;
-	private int gender;
-	private int dno;
-	private int joinDate;
+	private Gender gender;
+	private Department deptNo;
+	private Date joinDate;
 	
 	public Employee() {
 
@@ -16,19 +18,18 @@ public class Employee {
 	public Employee(String empNo) {
 		this.empNo = empNo;
 	}
-	
-	
-	public Employee(String empNo, String empName, int title, int salary, int gender, int dno, int joinDate) {
+
+	public Employee(String empNo, String empName, Title title, int salary, Gender gender, Department deptNo,
+			Date joinDate) {
 		this.empNo = empNo;
 		this.empName = empName;
 		this.title = title;
 		this.salary = salary;
 		this.gender = gender;
-		this.dno = dno;
+		this.deptNo = deptNo;
 		this.joinDate = joinDate;
 	}
 
-	//get set
 	public String getEmpNo() {
 		return empNo;
 	}
@@ -45,11 +46,11 @@ public class Employee {
 		this.empName = empName;
 	}
 
-	public int getTitle() {
+	public Title getTitle() {
 		return title;
 	}
 
-	public void setTitle(int title) {
+	public void setTitle(Title title) {
 		this.title = title;
 	}
 
@@ -61,33 +62,33 @@ public class Employee {
 		this.salary = salary;
 	}
 
-	public int getGender() {
+	public Gender getGender() {
 		return gender;
 	}
 
-	public void setGender(int gender) {
+	public void setGender(Gender gender) {
 		this.gender = gender;
 	}
 
-	public int getDno() {
-		return dno;
+	public Department getDeptNo() {
+		return deptNo;
 	}
 
-	public void setDno(int dno) {
-		this.dno = dno;
+	public void setDeptNo(Department deptNo) {
+		this.deptNo = deptNo;
 	}
 
-	public int getJoinDate() {
+	public Date getJoinDate() {
 		return joinDate;
 	}
 
-	public void setJoinDate(int joinDate) {
+	public void setJoinDate(Date joinDate) {
 		this.joinDate = joinDate;
 	}
 
 	@Override
 	public String toString() {
-		return String.format("Employee [%s, %s, %s, %s, %s, %s, %s]", empNo, empName, title, salary, gender, dno, joinDate);
+		return String.format("Employee [%s, %s, %s, %s, %s, %s, %s]",empNo, empName, title, salary, gender, deptNo, joinDate);
 	}
 	
 	

@@ -16,6 +16,11 @@ public class Department {
 		this.floor = floor;
 	}
 	
+	public Department(String daptName, int floor) {
+		this.daptName = daptName;
+		this.floor = floor;
+	}
+
 	public Department(String deptNo) {
 		this.deptNo = deptNo;
 	}
