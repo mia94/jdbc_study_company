@@ -13,12 +13,15 @@ import java.awt.GridLayout;
 import javax.swing.SwingConstants;
 import javax.swing.JComboBox;
 import javax.swing.JSpinner;
+import javax.swing.JRadioButton;
+import javax.swing.JButton;
 
 public class EmployeeManagementUi extends JFrame {
 
 	private JPanel contentPane;
 	private JTextField textField;
 	private JTextField textField_1;
+	private JTextField textField_2;
 
 	/**
 	 * Create the frame.
@@ -29,7 +32,7 @@ public class EmployeeManagementUi extends JFrame {
 	private void initComponents() {
 		setTitle("사원관리");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 450, 300);
+		setBounds(100, 100, 473, 403);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -96,8 +99,61 @@ public class EmployeeManagementUi extends JFrame {
 		JLabel lblNewLabel_5 = new JLabel("");
 		panel.add(lblNewLabel_5);
 		
+		JLabel label_7 = new JLabel("성별");
+		label_7.setHorizontalAlignment(SwingConstants.CENTER);
+		panel.add(label_7);
+		
+		JPanel panel_3 = new JPanel();
+		panel.add(panel_3);
+		
+		JRadioButton rdbtnNewRadioButton = new JRadioButton("남");
+		panel_3.add(rdbtnNewRadioButton);
+		
+		JRadioButton rdbtnNewRadioButton_1 = new JRadioButton("여");
+		panel_3.add(rdbtnNewRadioButton_1);
+		
+		JLabel lblNewLabel_6 = new JLabel("");
+		panel.add(lblNewLabel_6);
+		
+		JLabel lblNewLabel_7 = new JLabel("");
+		panel.add(lblNewLabel_7);
+		
+		JLabel lblNewLabel_8 = new JLabel("부서");
+		lblNewLabel_8.setHorizontalAlignment(SwingConstants.CENTER);
+		panel.add(lblNewLabel_8);
+		
+		JComboBox comboBox_1 = new JComboBox();
+		panel.add(comboBox_1);
+		
+		JLabel lblNewLabel_9 = new JLabel("");
+		panel.add(lblNewLabel_9);
+		
+		JLabel lblNewLabel_10 = new JLabel("");
+		panel.add(lblNewLabel_10);
+		
+		JLabel lblNewLabel_11 = new JLabel("입사일");
+		lblNewLabel_11.setHorizontalAlignment(SwingConstants.CENTER);
+		panel.add(lblNewLabel_11);
+		
+		textField_2 = new JTextField();
+		panel.add(textField_2);
+		textField_2.setColumns(10);
+		
+		JLabel lblNewLabel_13 = new JLabel("");
+		panel.add(lblNewLabel_13);
+		
 		JPanel panel_1 = new JPanel();
 		contentPane.add(panel_1);
+		panel_1.setLayout(new GridLayout(0, 4, 0, 0));
+		
+		JLabel lblNewLabel_12 = new JLabel("");
+		panel_1.add(lblNewLabel_12);
+		
+		JButton btnNewButton = new JButton("추가");
+		panel_1.add(btnNewButton);
+		
+		JButton btnNewButton_1 = new JButton("취소");
+		panel_1.add(btnNewButton_1);
 		
 		JPanel panel_2 = new JPanel();
 		contentPane.add(panel_2);

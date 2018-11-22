@@ -134,6 +134,7 @@ public class TitleManagementUi extends JFrame implements ActionListener {
 				}
 			}
 		});
+		popMenu.add(delItem);
 		
 		return popMenu;
 	}
