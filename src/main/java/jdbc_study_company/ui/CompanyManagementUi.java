@@ -66,6 +66,7 @@ public class CompanyManagementUi extends JFrame implements ActionListener {
 	protected void do_btnEmployeeMangement_actionPerformed(ActionEvent e) {
 		//사원관리 버튼 클릭시 사원관리창띄우기
 		EmployeeManagementUi ui = new EmployeeManagementUi();
+		ui.setVisible(true);
 		
 	}
 	protected void do_btnDepartmentManagement_actionPerformed(ActionEvent e) {

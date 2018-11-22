@@ -20,7 +20,7 @@ public class EmployeeDaoImpl implements EmployeeDao {
 	@Override
 	public List<Employee> selectEmployeeByAll() {
 			List<Employee> list = new ArrayList<>();
-			String sql = "select e.empno, e.empname, t.tname, e.salary, e.gender, d.deptname, d.floor, e.joindate from employee e join department d on e.deptno = d.deptno join title t on e.title = t.tno";
+			String sql = "select e.empno, e.empname, t.tno , t.tname, e.salary, e.gender, d.deptname, d.floor, e.joindate from employee e join department d on e.deptno = d.deptno join title t on e.title = t.tno";
 			try(Connection conn = ConnectionProvider.getConnection();
 					PreparedStatement pstmt = conn.prepareStatement(sql);
 					ResultSet rs = pstmt.executeQuery()){
