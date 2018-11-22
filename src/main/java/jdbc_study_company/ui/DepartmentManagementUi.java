@@ -143,7 +143,6 @@ public class DepartmentManagementUi extends JFrame implements ActionListener {
 				//버튼 바꾸기
 				btnAdd.setText("수정");
 				
-				
 			}
 		});
 		popMenu.add(updateItem);
@@ -182,11 +181,14 @@ public class DepartmentManagementUi extends JFrame implements ActionListener {
 	}
 	private void do_btnUpdate_actionPerformed(ActionEvent e) {
 		//수정버튼 실행시
-		Department item = deptPanel.getSelectedDept();
+		Department item = getItem();
 		try {
 			service.updeteDept(item);
+			System.out.println(item);
 			deptPanel.setList(service.selectDepartmentByAll());
 			deptPanel.loadDatas();
+			cleartf();
+			btnAdd.setText("추가");
 		} catch (SQLException e1) {
 			e1.printStackTrace();
 		}
@@ -223,7 +225,11 @@ public class DepartmentManagementUi extends JFrame implements ActionListener {
 	}
 	
 	private void cleartf() {
-		tfDeptNo.setText("");
+		try {
+			tfDeptNo.setText(service.nextNoDeptNo());
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 		tfDeptName.setText("");
 		tfFloor.setText("");
 	}
