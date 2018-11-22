@@ -11,6 +11,7 @@ import javax.swing.border.EmptyBorder;
 import javafx.scene.control.SeparatorMenuItem;
 import jdbc_study_company.dto.Title;
 import jdbc_study_company.service.TitleService;
+import jdbc_study_company.ui.list.TitlePanel;
 
 import java.awt.GridLayout;
 import javax.swing.JLabel;
@@ -114,7 +115,7 @@ public class TitleManagementUi extends JFrame implements ActionListener {
 		updateItem.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				Title item = titlePanel.getSelectTitle();
+				Title item = titlePanel.getSelectedItem();
 				setItem(item);
 				btnAdd.setText("수정");
 			}	
@@ -126,7 +127,7 @@ public class TitleManagementUi extends JFrame implements ActionListener {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				try {
-					service.deleteTitle(titlePanel.getSelectTitle());
+					service.deleteTitle(titlePanel.getSelectedItem());
 					titlePanel.setList(service.selectTitleByAll());
 					titlePanel.loadDatas();
 				} catch (SQLException e1) {

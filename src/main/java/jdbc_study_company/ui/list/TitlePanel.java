@@ -1,4 +1,4 @@
-package jdbc_study_company.ui;
+package jdbc_study_company.ui.list;
 
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -46,11 +46,11 @@ public class TitlePanel extends JPanel {
 	public Object[][] getDatas() {
 		Object[][] datas = new Object[list.size()][];
 		for(int i=0;i<list.size();i++) {
-			datas[i] = getTitlerow(list.get(i));
+			datas[i] = getItemrow(list.get(i));
 		}
 		return datas;
 	}
-	private Object[] getTitlerow(Title item) {
+	private Object[] getItemrow(Title item) {
 		return new Object[] {
 				item.gettNo(),
 				item.gettName()
@@ -65,7 +65,7 @@ public class TitlePanel extends JPanel {
 		table.setComponentPopupMenu(PopUpMenu);
 	}
 	
-	public Title getSelectTitle() {
+	public Title getSelectedItem() {
 		int selectRow = table.getSelectedRow();
 		if(selectRow == -1) {
 			JOptionPane.showMessageDialog(null, "해당정보를 선택하세요");

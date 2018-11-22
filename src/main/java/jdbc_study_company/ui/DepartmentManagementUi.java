@@ -10,6 +10,7 @@ import javax.swing.border.EmptyBorder;
 
 import jdbc_study_company.dto.Department;
 import jdbc_study_company.service.DepartmentService;
+import jdbc_study_company.ui.list.DepartmentPanel;
 
 import java.awt.GridLayout;
 import java.util.List;
@@ -138,7 +139,7 @@ public class DepartmentManagementUi extends JFrame implements ActionListener {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				//수정하려는 dept정보 가져오기
-				Department item = deptPanel.getSelectedDept();
+				Department item = deptPanel.getSelectedItem();
 				setItem(item);
 				//버튼 바꾸기
 				btnAdd.setText("수정");
@@ -153,7 +154,7 @@ public class DepartmentManagementUi extends JFrame implements ActionListener {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				try {
-					service.deleteDept(deptPanel.getSelectedDept());
+					service.deleteDept(deptPanel.getSelectedItem());
 					deptPanel.setList(service.selectDepartmentByAll());
 					deptPanel.loadDatas();
 				} catch (SQLException e1) {
