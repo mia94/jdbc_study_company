@@ -12,4 +12,6 @@ public interface DepartmentDao {
 	int deleteDepartment(Department item) throws SQLException;
 	int updateDepartment(Department item) throws SQLException;
 	
+	String nextNoDepartment() throws SQLException;
+	
 }

@@ -25,6 +25,13 @@ public class DepartmentService {
 	public int deleteDept(Department item) throws SQLException {
 		return dao.deleteDepartment(item);
 	}
+	
+	public int updeteDept(Department item) throws SQLException {
+		return dao.updateDepartment(item);
+	}
+	public String nextNoDeptNo() throws SQLException {
+		return dao.nextNoDepartment();
+	}
 }
 
 

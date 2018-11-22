@@ -64,7 +64,12 @@ public class DepartmentManagementUi extends JFrame implements ActionListener {
 		
 		tfDeptNo = new JTextField();
 		tfDeptNo.setEditable(false);
-		
+		//다음번호 자동 추가해두기
+		try {
+			tfDeptNo.setText(service.nextNoDeptNo());
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 		panel.add(tfDeptNo);
 		tfDeptNo.setColumns(10);
 		
@@ -134,8 +139,7 @@ public class DepartmentManagementUi extends JFrame implements ActionListener {
 			public void actionPerformed(ActionEvent e) {
 				//수정하려는 dept정보 가져오기
 				Department item = deptPanel.getSelectedDept();
-				tfDeptNo.setText(item.getDeptNo());
-				tfDeptName.setText(item.getDaptName());
+				setItem(item);
 				//버튼 바꾸기
 				btnAdd.setText("수정");
 				
@@ -149,7 +153,6 @@ public class DepartmentManagementUi extends JFrame implements ActionListener {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				// 삭제할 dept정보 가져오기
 				try {
 					service.deleteDept(deptPanel.getSelectedDept());
 					deptPanel.setList(service.selectDepartmentByAll());
@@ -169,8 +172,25 @@ public class DepartmentManagementUi extends JFrame implements ActionListener {
 			do_btnCancel_actionPerformed(e);
 		}
 		if (e.getSource() == btnAdd) {
-			do_btnAdd_actionPerformed(e);
+			if(btnAdd.getText()=="추가") {
+				do_btnAdd_actionPerformed(e);
+			}else {
+				do_btnUpdate_actionPerformed(e);
+			}
+			
 		}
+	}
+	private void do_btnUpdate_actionPerformed(ActionEvent e) {
+		//수정버튼 실행시
+		Department item = deptPanel.getSelectedDept();
+		try {
+			service.updeteDept(item);
+			deptPanel.setList(service.selectDepartmentByAll());
+			deptPanel.loadDatas();
+		} catch (SQLException e1) {
+			e1.printStackTrace();
+		}
+		
 	}
 	protected void do_btnAdd_actionPerformed(ActionEvent e) {
 		//추가버튼 실행
@@ -190,6 +210,12 @@ public class DepartmentManagementUi extends JFrame implements ActionListener {
 		String deptName = tfDeptName.getText().trim();
 		int floor = Integer.parseInt(tfFloor.getText().trim());
 		return new Department(deptNo, deptName, floor);
+	}
+	
+	private void setItem(Department item) {
+		tfDeptNo.setText(item.getDeptNo());
+		tfDeptName.setText(item.getDaptName());
+		tfFloor.setText(item.getFloor() + "");
 	}
 	protected void do_btnCancel_actionPerformed(ActionEvent e) {
 		//취소버튼 실행 초기화

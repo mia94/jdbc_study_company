@@ -80,7 +80,9 @@ public class DepartmentPanel extends JPanel {
 			return null;
 		}
 		String deptNo = (String)table.getModel().getValueAt(selectedRow, 0);
-		return new Department(deptNo);
+		String daptName = (String)table.getModel().getValueAt(selectedRow, 1);
+		int floor = (int)table.getModel().getValueAt(selectedRow, 2);
+		return new Department(deptNo, daptName, floor);
 	}
 
 }

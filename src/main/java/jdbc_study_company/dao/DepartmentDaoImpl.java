@@ -71,16 +71,34 @@ public class DepartmentDaoImpl implements DepartmentDao {
 	@Override
 	public int updateDepartment(Department item) throws SQLException {
 		System.out.println("updateDepartment 실행");
-		String sql = "update department set deptName = ? where deptno = ? ";
+		String sql = "update department set deptName = ?, floor = ? where deptno = ? ";
 		int row = 0;
 		try(Connection conn = ConnectionProvider.getConnection();
 				PreparedStatement pstmt = conn.prepareStatement(sql)){
 			pstmt.setString(1, item.getDaptName());
-			pstmt.setString(2, item.getDeptNo());
+			pstmt.setInt(2, item.getFloor());
+			pstmt.setString(3, item.getDeptNo());
 			LogUtil.prnLog(pstmt);
 			row = pstmt.executeUpdate();
 		}
 		return row;
+	}
+
+	@Override
+	public String nextNoDepartment() throws SQLException {
+		System.out.println("nextNoDepartment 실행");
+		String sql = "select max(deptno) nextno from department";
+		String nextNo = "";
+		try(Connection conn = ConnectionProvider.getConnection();
+				PreparedStatement pstmt = conn.prepareStatement(sql);
+				ResultSet rs = pstmt.executeQuery()){
+			LogUtil.prnLog(pstmt);
+			if(rs.next()) {			
+				int no = Integer.parseInt(rs.getString("nextno").substring(1))+1;
+				nextNo = String.format("D%03d", no);//D006
+			}
+		}
+		return nextNo;
 	}
 	
 	
