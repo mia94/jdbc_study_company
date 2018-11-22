@@ -1,6 +1,9 @@
 package jdbc_study_company.ui;
 
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JPopupMenu;
+
 import java.awt.BorderLayout;
 import java.util.List;
 
@@ -12,6 +15,7 @@ import jdbc_study_company.dto.Department;
 import jdbc_study_company.jdbc.LogUtil;
 
 public class DepartmentPanel extends JPanel {
+	private JScrollPane jScrollPane;
 	private JTable table;
 	private List<Department> list;
 	
@@ -62,6 +66,21 @@ public class DepartmentPanel extends JPanel {
 		return new String[] {
 			"번호", "부서명", "위치"
 		};
+	}
+	
+	public void setPopupMenu(JPopupMenu PopUpMenu) {
+		table.setComponentPopupMenu(PopUpMenu);
+//		jScrollPane.setComponentPopupMenu(PopUpMenu);//테이블이 없을때도 팝업메뉴가 뜨도록
+	}
+	
+	public Department getSelectedDept() {
+		int selectedRow = table.getSelectedRow();
+		if(selectedRow == -1) {
+			JOptionPane.showMessageDialog(null, "해당정보를 선택하세요");
+			return null;
+		}
+		String deptNo = (String)table.getModel().getValueAt(selectedRow, 0);
+		return new Department(deptNo);
 	}
 
 }

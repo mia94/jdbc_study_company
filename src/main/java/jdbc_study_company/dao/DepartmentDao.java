@@ -11,4 +11,5 @@ public interface DepartmentDao {
 	int insertDepartment(Department item) throws SQLException;
 	int deleteDepartment(Department item) throws SQLException;
 	int updateDepartment(Department item) throws SQLException;
+	
 }

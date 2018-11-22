@@ -21,6 +21,10 @@ public class DepartmentService {
 	public int insertDept(Department item) throws SQLException {
 		return dao.insertDepartment(item);
 	}
+	
+	public int deleteDept(Department item) throws SQLException {
+		return dao.deleteDepartment(item);
+	}
 }
 
 

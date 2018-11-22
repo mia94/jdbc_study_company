@@ -5,6 +5,7 @@ import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.JPopupMenu;
 import javax.swing.border.EmptyBorder;
 
 import jdbc_study_company.dto.Department;
@@ -14,8 +15,10 @@ import java.awt.GridLayout;
 import java.util.List;
 
 import javax.swing.JLabel;
+import javax.swing.JMenuItem;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
+import javax.print.DocFlavor.STRING;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.sql.SQLException;
@@ -114,10 +117,53 @@ public class DepartmentManagementUi extends JFrame implements ActionListener {
 		deptPanel.setList(list);
 		deptPanel.loadDatas();
 		
+		//popup메뉴
+		deptPanel.setPopupMenu(createDeptPopUpMenu());
+		
 //		pDeptTable.add(deptPanel);
 		contentPane.add(deptPanel, BorderLayout.CENTER);
 	}
 
+	private JPopupMenu createDeptPopUpMenu() {
+		JPopupMenu popMenu = new JPopupMenu();
+		
+		JMenuItem updateItem = new JMenuItem("수정");
+		updateItem.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				//수정하려는 dept정보 가져오기
+				Department item = deptPanel.getSelectedDept();
+				tfDeptNo.setText(item.getDeptNo());
+				tfDeptName.setText(item.getDaptName());
+				//버튼 바꾸기
+				btnAdd.setText("수정");
+				
+				
+			}
+		});
+		popMenu.add(updateItem);
+		
+		JMenuItem delItem = new JMenuItem("삭제");
+		delItem.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// 삭제할 dept정보 가져오기
+				try {
+					service.deleteDept(deptPanel.getSelectedDept());
+					deptPanel.setList(service.selectDepartmentByAll());
+					deptPanel.loadDatas();
+				} catch (SQLException e1) {
+					e1.printStackTrace();
+				}
+			}
+		});
+		popMenu.add(delItem);
+
+		
+		return popMenu;
+	}
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == btnCancel) {
 			do_btnCancel_actionPerformed(e);
@@ -137,9 +183,8 @@ public class DepartmentManagementUi extends JFrame implements ActionListener {
 		} catch (SQLException e1) {
 			e1.printStackTrace();
 		}
-		
-		
 	}
+	
 	private Department getItem() {
 		String deptNo = tfDeptNo.getText().trim();
 		String deptName = tfDeptName.getText().trim();
