@@ -8,6 +8,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import org.junit.Assert;
+
 import jdbc_study_company.dto.Department;
 import jdbc_study_company.dto.Employee;
 import jdbc_study_company.dto.Gender;
@@ -16,7 +18,7 @@ import jdbc_study_company.jdbc.ConnectionProvider;
 import jdbc_study_company.jdbc.LogUtil;
 
 public class EmployeeDaoImpl implements EmployeeDao {
-
+	
 	@Override
 	public List<Employee> selectEmployeeByAll() {
 			List<Employee> list = new ArrayList<>();
@@ -52,8 +54,15 @@ public class EmployeeDaoImpl implements EmployeeDao {
 
 	@Override
 	public int deleteEmployee(Employee item) throws SQLException {
-
-		return 0;
+		String sql = "delete from employee where empno = ? ";
+		int row = 0;
+		try(Connection conn = ConnectionProvider.getConnection();
+				PreparedStatement pstmt = conn.prepareStatement(sql)){
+			pstmt.setString(1, item.getEmpNo());
+			LogUtil.prnLog(pstmt);
+			row = pstmt.executeUpdate();
+		}
+		return row;
 	}
 
 	@Override
@@ -64,8 +73,19 @@ public class EmployeeDaoImpl implements EmployeeDao {
 
 	@Override
 	public String nextNoEmployee() throws SQLException {
-
-		return null;
+		System.out.println("nextEmployee 실행");
+		String sql = "select max(empno) nextno from employee";
+		String nextNo = "";
+		try(Connection conn = ConnectionProvider.getConnection();
+				PreparedStatement pstmt = conn.prepareStatement(sql);
+				ResultSet rs = pstmt.executeQuery()){
+			LogUtil.prnLog(pstmt);
+			if(rs.next()) {			
+				int no = Integer.parseInt(rs.getString("nextno").substring(4))+1;
+				nextNo = String.format("E017%03d", no);
+			}
+		}
+		return nextNo;
 	}
 	
 }

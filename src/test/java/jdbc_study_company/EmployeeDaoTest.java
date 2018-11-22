@@ -2,6 +2,7 @@ package jdbc_study_company;
 
 import static org.junit.Assert.*;
 
+import java.sql.SQLException;
 import java.util.List;
 
 import org.junit.AfterClass;
@@ -43,7 +44,16 @@ public class EmployeeDaoTest {
 		LogUtil.prnLog(list.toString());
 		Assert.assertNotNull(list);
 	}
-
+	
+	@Test
+	public void test03deleteEmployee() throws SQLException {
+		Employee delEmp = new Employee("E017001");
+		delEmp.setEmpNo("E017001");
+		int row = dao.deleteEmployee(delEmp);
+		LogUtil.prnLog("delete row :" + row);
+		Assert.assertEquals(1, row);
+		test01selectEmployeeByAll();
+	}
 }
 
 
