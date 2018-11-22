@@ -24,6 +24,8 @@ public class TitleDaoImpl implements TitleDao {
 			while(rs.next()) {
 				list.add(getTitle(rs));
 			}
+		}catch(SQLException e) {
+			e.printStackTrace();
 		}
 		return list;
 	}
@@ -77,8 +79,23 @@ public class TitleDaoImpl implements TitleDao {
 		}
 		return row;
 	}
-	
-	
+
+	@Override
+	public String nextNoTitleNo() throws SQLException {
+		System.out.println("nextNoDeptNo 실행");
+		String sql = "select max(tno) nextno from title";
+		String nextNo = "";
+		try(Connection conn = ConnectionProvider.getConnection();
+				PreparedStatement pstmt = conn.prepareStatement(sql);
+				ResultSet rs = pstmt.executeQuery()){
+			LogUtil.prnLog(pstmt);
+			if(rs.next()) {
+				int no = Integer.parseInt(rs.getString("nextno").substring(1))+1;
+				nextNo = String.format("T%03d", no);
+			}
+		}
+		return nextNo;
+	}
 
 }
 

@@ -1,19 +1,30 @@
 package jdbc_study_company.ui;
 
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JPopupMenu;
+
 import java.awt.BorderLayout;
+import java.util.List;
+
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
-public class TitlePanel extends JPanel {
-	private JTable table;
+import jdbc_study_company.dto.Title;
 
+public class TitlePanel extends JPanel {
+	private JScrollPane jScrollPane;
+	private JTable table;
+	private List<Title> list;
+
+	public void setList(List<Title> list) {
+		this.list = list;
+	}
 	/**
 	 * Create the panel.
 	 */
 	public TitlePanel() {
-
 		initComponents();
 	}
 	private void initComponents() {
@@ -23,15 +34,66 @@ public class TitlePanel extends JPanel {
 		add(scrollPane, BorderLayout.CENTER);
 		
 		table = new JTable();
-		table.setModel(new DefaultTableModel(
-			new Object[][] {
-				{null, null},
-			},
-			new String[] {
-				"번호", "직책"
-			}
-		));
+//		loadDatas();
 		scrollPane.setViewportView(table);
 	}
+	public void loadDatas() {
+		table.setModel(new DefaultTableModel(
+			getDatas(),
+			getColumnName()
+		));
+	}
+	public Object[][] getDatas() {
+		Object[][] datas = new Object[list.size()][];
+		for(int i=0;i<list.size();i++) {
+			datas[i] = getTitlerow(list.get(i));
+		}
+		return datas;
+	}
+	private Object[] getTitlerow(Title item) {
+		return new Object[] {
+				item.gettNo(),
+				item.gettName()
+		};
+	}
+	public String[] getColumnName() {
+		return new String[] {
+			"번호", "직책"
+		};
+	}
+	public void setPopupMenu(JPopupMenu PopUpMenu) {
+		table.setComponentPopupMenu(PopUpMenu);
+	}
+	
+	public Title getSelectTitle() {
+		int selectRow = table.getSelectedRow();
+		if(selectRow == -1) {
+			JOptionPane.showMessageDialog(null, "해당정보를 선택하세요");
+			return null;
+		}
+		String tNo = (String)table.getModel().getValueAt(selectRow, 0);
+		String tName = (String)table.getModel().getValueAt(selectRow, 1);
+		return new Title(tNo, tName);
+	}
+	
 
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
