@@ -41,7 +41,7 @@ public class DepartmentDaoTest {
 		System.out.println();
 	}
 
-	@Test
+	/*@Test
 	public void test01selectDepartmentByAll(){
 		List<Department> list = deptDao.selectDepartmentByAll();
 		LogUtil.prnLog(list.toString());
@@ -74,7 +74,7 @@ public class DepartmentDaoTest {
 		LogUtil.prnLog("update row : " + row);
 		Assert.assertEquals(1, row);
 		test01selectDepartmentByAll();
-	}
+	}*/
 }
 
 

@@ -2,7 +2,7 @@ package jdbc_study_company;
 
 import java.awt.EventQueue;
 
-import jdbc_study_company.ui.DepartmentManagementUi;
+import jdbc_study_company.ui.CompanyManagementUi;
 
 public class Main {
 
@@ -13,7 +13,7 @@ public class Main {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					DepartmentManagementUi frame = new DepartmentManagementUi();
+					CompanyManagementUi frame = new CompanyManagementUi();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();

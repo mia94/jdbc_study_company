@@ -6,6 +6,7 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
 import javax.swing.JButton;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
@@ -67,8 +68,33 @@ public class CompanyManagementUi extends JFrame implements ActionListener {
 	}
 	protected void do_btnDepartmentManagement_actionPerformed(ActionEvent e) {
 		//부서관리 버튼 클릭시 사원관리창띄우기
+		DepartmentManagementUi ui = new DepartmentManagementUi();
+		ui.setVisible(true);
+		
 	}
 	protected void do_btnTitleManagement_actionPerformed(ActionEvent e) {
 		//직책관리 버튼 클릭시 사원관리창띄우기
+		TitleManagementUi ui = new TitleManagementUi();
+		ui.setVisible(true);
 	}
+	
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
