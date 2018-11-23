@@ -10,25 +10,37 @@ import javax.swing.BoxLayout;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 import java.awt.GridLayout;
+import java.util.List;
+
 import javax.swing.SwingConstants;
 import javax.swing.JComboBox;
 import javax.swing.JSpinner;
 import javax.swing.JRadioButton;
 import javax.swing.JButton;
+
+import jdbc_study_company.dto.Employee;
+import jdbc_study_company.service.EmployeeService;
 import jdbc_study_company.ui.list.EmployeePanel;
 import javax.swing.SpinnerNumberModel;
+import org.eclipse.wb.swing.FocusTraversalOnArray;
+import java.awt.Component;
 
 public class EmployeeManagementUi extends JFrame {
 
 	private JPanel contentPane;
-	private JTextField textField;
-	private JTextField textField_1;
-	private JTextField textField_2;
-
+	private JTextField tfEmpNo;
+	private JTextField tfEmpName;
+	private JTextField tfJoinDate;
+	
+	private EmployeePanel empPanel;
+	private EmployeeService service;
+	
+	List<Employee> list;
 	/**
 	 * Create the frame.
 	 */
 	public EmployeeManagementUi() {
+		service = new EmployeeService();
 		initComponents();
 	}
 	private void initComponents() {
@@ -40,126 +52,131 @@ public class EmployeeManagementUi extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(new BoxLayout(contentPane, BoxLayout.Y_AXIS));
 		
-		JPanel panel = new JPanel();
-		contentPane.add(panel);
-		panel.setLayout(new GridLayout(0, 4, 0, 0));
+		JPanel pInput = new JPanel();
+		contentPane.add(pInput);
+		pInput.setLayout(new GridLayout(0, 4, 0, 0));
 		
 		JLabel lblNewLabel_1 = new JLabel("");
-		panel.add(lblNewLabel_1);
+		pInput.add(lblNewLabel_1);
 		
-		JLabel lblNewLabel = new JLabel("번호");
-		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		panel.add(lblNewLabel);
+		JLabel lblEmpNo = new JLabel("번호");
+		lblEmpNo.setHorizontalAlignment(SwingConstants.CENTER);
+		pInput.add(lblEmpNo);
 		
-		textField = new JTextField();
-		panel.add(textField);
-		textField.setColumns(10);
+		tfEmpNo = new JTextField();
+		pInput.add(tfEmpNo);
+		tfEmpNo.setColumns(10);
 		
 		JLabel lblNewLabel_2 = new JLabel("");
-		panel.add(lblNewLabel_2);
+		pInput.add(lblNewLabel_2);
 		
 		JLabel label = new JLabel("");
-		panel.add(label);
+		pInput.add(label);
 		
-		JLabel label_1 = new JLabel("사원명");
-		label_1.setHorizontalAlignment(SwingConstants.CENTER);
-		panel.add(label_1);
+		JLabel lblEmpName = new JLabel("사원명");
+		lblEmpName.setHorizontalAlignment(SwingConstants.CENTER);
+		pInput.add(lblEmpName);
 		
-		textField_1 = new JTextField();
-		textField_1.setColumns(10);
-		panel.add(textField_1);
+		tfEmpName = new JTextField();
+		tfEmpName.setColumns(10);
+		pInput.add(tfEmpName);
 		
 		JLabel label_2 = new JLabel("");
-		panel.add(label_2);
+		pInput.add(label_2);
 		
 		JLabel label_3 = new JLabel("");
-		panel.add(label_3);
+		pInput.add(label_3);
 		
-		JLabel label_4 = new JLabel("직책");
-		label_4.setHorizontalAlignment(SwingConstants.CENTER);
-		panel.add(label_4);
+		JLabel lblTitle = new JLabel("직책");
+		lblTitle.setHorizontalAlignment(SwingConstants.CENTER);
+		pInput.add(lblTitle);
 		
-		JComboBox comboBox = new JComboBox();
-		panel.add(comboBox);
+		JComboBox cmbTitle = new JComboBox();
+		pInput.add(cmbTitle);
 		
 		JLabel lblNewLabel_3 = new JLabel("");
-		panel.add(lblNewLabel_3);
+		pInput.add(lblNewLabel_3);
 		
 		JLabel label_5 = new JLabel("");
-		panel.add(label_5);
+		pInput.add(label_5);
 		
-		JLabel label_6 = new JLabel("급여");
-		label_6.setHorizontalAlignment(SwingConstants.CENTER);
-		panel.add(label_6);
+		JLabel lblSalary = new JLabel("급여");
+		lblSalary.setHorizontalAlignment(SwingConstants.CENTER);
+		pInput.add(lblSalary);
 		
-		JSpinner spinner = new JSpinner();
-		spinner.setModel(new SpinnerNumberModel(1500000, 1000000, 5000000, 100000));
-		panel.add(spinner);
+		JSpinner spinSalary = new JSpinner();
+		spinSalary.setModel(new SpinnerNumberModel(1500000, 1000000, 5000000, 100000));
+		pInput.add(spinSalary);
 		
 		JLabel lblNewLabel_4 = new JLabel("");
-		panel.add(lblNewLabel_4);
+		pInput.add(lblNewLabel_4);
 		
 		JLabel lblNewLabel_5 = new JLabel("");
-		panel.add(lblNewLabel_5);
+		pInput.add(lblNewLabel_5);
 		
-		JLabel label_7 = new JLabel("성별");
-		label_7.setHorizontalAlignment(SwingConstants.CENTER);
-		panel.add(label_7);
+		JLabel lblGender = new JLabel("성별");
+		lblGender.setHorizontalAlignment(SwingConstants.CENTER);
+		pInput.add(lblGender);
 		
 		JPanel panel_3 = new JPanel();
-		panel.add(panel_3);
+		pInput.add(panel_3);
 		
-		JRadioButton rdbtnNewRadioButton = new JRadioButton("남");
-		panel_3.add(rdbtnNewRadioButton);
+		JRadioButton rdbtnMale = new JRadioButton("남");
+		rdbtnMale.setSelected(true);
+		panel_3.add(rdbtnMale);
 		
-		JRadioButton rdbtnNewRadioButton_1 = new JRadioButton("여");
-		panel_3.add(rdbtnNewRadioButton_1);
+		JRadioButton rdbtnFemale = new JRadioButton("여");
+		panel_3.add(rdbtnFemale);
+		panel_3.setFocusTraversalPolicy(new FocusTraversalOnArray(new Component[]{rdbtnMale, rdbtnFemale}));
 		
 		JLabel lblNewLabel_6 = new JLabel("");
-		panel.add(lblNewLabel_6);
+		pInput.add(lblNewLabel_6);
 		
 		JLabel lblNewLabel_7 = new JLabel("");
-		panel.add(lblNewLabel_7);
+		pInput.add(lblNewLabel_7);
 		
-		JLabel lblNewLabel_8 = new JLabel("부서");
-		lblNewLabel_8.setHorizontalAlignment(SwingConstants.CENTER);
-		panel.add(lblNewLabel_8);
+		JLabel lblDept = new JLabel("부서");
+		lblDept.setHorizontalAlignment(SwingConstants.CENTER);
+		pInput.add(lblDept);
 		
-		JComboBox comboBox_1 = new JComboBox();
-		panel.add(comboBox_1);
+		JComboBox cmbDept = new JComboBox();
+		pInput.add(cmbDept);
 		
 		JLabel lblNewLabel_9 = new JLabel("");
-		panel.add(lblNewLabel_9);
+		pInput.add(lblNewLabel_9);
 		
 		JLabel lblNewLabel_10 = new JLabel("");
-		panel.add(lblNewLabel_10);
+		pInput.add(lblNewLabel_10);
 		
-		JLabel lblNewLabel_11 = new JLabel("입사일");
-		lblNewLabel_11.setHorizontalAlignment(SwingConstants.CENTER);
-		panel.add(lblNewLabel_11);
+		JLabel lblJoinDate = new JLabel("입사일");
+		lblJoinDate.setHorizontalAlignment(SwingConstants.CENTER);
+		pInput.add(lblJoinDate);
 		
-		textField_2 = new JTextField();
-		panel.add(textField_2);
-		textField_2.setColumns(10);
+		tfJoinDate = new JTextField();
+		pInput.add(tfJoinDate);
+		tfJoinDate.setColumns(10);
 		
 		JLabel lblNewLabel_13 = new JLabel("");
-		panel.add(lblNewLabel_13);
+		pInput.add(lblNewLabel_13);
 		
-		JPanel panel_1 = new JPanel();
-		contentPane.add(panel_1);
-		panel_1.setLayout(new GridLayout(0, 4, 0, 0));
+		JPanel pBtn = new JPanel();
+		contentPane.add(pBtn);
+		pBtn.setLayout(new GridLayout(0, 4, 0, 0));
 		
 		JLabel lblNewLabel_12 = new JLabel("");
-		panel_1.add(lblNewLabel_12);
+		pBtn.add(lblNewLabel_12);
 		
-		JButton btnNewButton = new JButton("추가");
-		panel_1.add(btnNewButton);
+		JButton btnOk = new JButton("추가");
+		pBtn.add(btnOk);
 		
-		JButton btnNewButton_1 = new JButton("취소");
-		panel_1.add(btnNewButton_1);
+		JButton btnCancel = new JButton("취소");
+		pBtn.add(btnCancel);
 		
-		EmployeePanel panel_2 = new EmployeePanel();
-		contentPane.add(panel_2);
+		EmployeePanel pEmpTable = new EmployeePanel();
+		list = service.selectEmployeeByAll();
+		
+		
+		contentPane.add(pEmpTable);
 	}
 
 }

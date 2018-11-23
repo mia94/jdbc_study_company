@@ -7,10 +7,10 @@ import jdbc_study_company.dao.EmployeeDao;
 import jdbc_study_company.dao.EmployeeDaoImpl;
 import jdbc_study_company.dto.Employee;
 
-public class employeeService {
+public class EmployeeService {
 	private EmployeeDao dao;
 
-	public employeeService() {
+	public EmployeeService() {
 		dao = new EmployeeDaoImpl();
 	}
 	
