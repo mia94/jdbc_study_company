@@ -12,6 +12,8 @@ import javax.swing.JLabel;
 import javax.swing.JTextField;
 import java.awt.GridLayout;
 import java.sql.SQLException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.Vector;
@@ -24,14 +26,17 @@ import javax.swing.JButton;
 
 import jdbc_study_company.dto.Department;
 import jdbc_study_company.dto.Employee;
+import jdbc_study_company.dto.Gender;
 import jdbc_study_company.dto.Title;
 import jdbc_study_company.service.EmployeeService;
 import jdbc_study_company.ui.list.EmployeePanel;
 import javax.swing.SpinnerNumberModel;
 import org.eclipse.wb.swing.FocusTraversalOnArray;
 import java.awt.Component;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
-public class EmployeeManagementUi extends JFrame {
+public class EmployeeManagementUi extends JFrame implements ActionListener {
 
 	private JPanel contentPane;
 	private JTextField tfEmpNo;
@@ -44,6 +49,11 @@ public class EmployeeManagementUi extends JFrame {
 	List<Employee> list;
 	private JComboBox cmbTitle;
 	private JComboBox cmbDept;
+	private JButton btnOk;
+	private JButton btnCancel;
+	private JSpinner spinSalary;
+	private JRadioButton rdbtnMale;
+	private JRadioButton rdbtnFemale;
 	/**
 	 * Create the frame.
 	 */
@@ -126,7 +136,7 @@ public class EmployeeManagementUi extends JFrame {
 		lblSalary.setHorizontalAlignment(SwingConstants.CENTER);
 		pInput.add(lblSalary);
 		
-		JSpinner spinSalary = new JSpinner();
+		spinSalary = new JSpinner();
 		spinSalary.setModel(new SpinnerNumberModel(1500000, 1000000, 5000000, 100000));
 		pInput.add(spinSalary);
 		
@@ -143,11 +153,11 @@ public class EmployeeManagementUi extends JFrame {
 		JPanel panel_3 = new JPanel();
 		pInput.add(panel_3);
 		
-		JRadioButton rdbtnMale = new JRadioButton("남");
+		rdbtnMale = new JRadioButton("남");
 		rdbtnMale.setSelected(true);
 		panel_3.add(rdbtnMale);
 		
-		JRadioButton rdbtnFemale = new JRadioButton("여");
+		rdbtnFemale = new JRadioButton("여");
 		panel_3.add(rdbtnFemale);
 		panel_3.setFocusTraversalPolicy(new FocusTraversalOnArray(new Component[]{rdbtnMale, rdbtnFemale}));
 		
@@ -178,7 +188,8 @@ public class EmployeeManagementUi extends JFrame {
 		pInput.add(lblJoinDate);
 		
 		tfJoinDate = new JTextField();
-//		tfJoinDate.setText(now);
+		tfJoinDate.setHorizontalAlignment(SwingConstants.RIGHT);
+		tfJoinDate.setText("0000-00-00");
 		pInput.add(tfJoinDate);
 		tfJoinDate.setColumns(10);
 		
@@ -192,19 +203,89 @@ public class EmployeeManagementUi extends JFrame {
 		JLabel lblNewLabel_12 = new JLabel("");
 		pBtn.add(lblNewLabel_12);
 		
-		JButton btnOk = new JButton("추가");
+		btnOk = new JButton("추가");
+		btnOk.addActionListener(this);
 		pBtn.add(btnOk);
 		
-		JButton btnCancel = new JButton("취소");
+		btnCancel = new JButton("취소");
+		btnCancel.addActionListener(this);
 		pBtn.add(btnCancel);
 		
 		//테이블 뜨는 곳
 		list = service.selectEmployeeByAll();
-		EmployeePanel empPanel = new EmployeePanel();
+		empPanel = new EmployeePanel();
 		empPanel.setList(list);
 		empPanel.loadDatas();
 		
 		contentPane.add(empPanel);
 	}
 
+	public void actionPerformed(ActionEvent e) {
+		if (e.getSource() == btnCancel) {
+			do_btnCancel_actionPerformed(e);
+		}
+		if (e.getSource() == btnOk) {
+			do_btnOk_actionPerformed(e);
+		}
+	}
+	protected void do_btnOk_actionPerformed(ActionEvent e) {
+		//btnOk입력시
+		Employee item = getItem();
+		try {
+			service.insertEmp(item);
+			empPanel.setList(service.selectEmployeeByAll());
+			empPanel.loadDatas();
+			cleartf();
+		} catch (SQLException e1) {
+			e1.printStackTrace();
+		}
+	
+	}
+	private void cleartf() {
+		tfEmpName.setText("");
+		cmbTitle.setSelectedIndex(-1);
+		spinSalary.setModel(new SpinnerNumberModel(1500000, 1000000, 5000000, 100000));
+		rdbtnMale.setSelected(true);
+		cmbDept.setSelectedIndex(-1);
+		tfJoinDate.setText("0000-00-00");
+	}
+	private Employee getItem() {
+		
+		String empNo = tfEmpNo.getText().trim();
+		String empName = tfEmpName.getText().trim();
+		Title title = (Title) cmbTitle.getSelectedItem();
+		int salary = (int) spinSalary.getValue();
+		Gender gender = null;
+		if(rdbtnFemale.isSelected()) {
+			gender = Gender.FEMALE;
+		}else {
+			gender = Gender.MALE;
+		}
+		Department deptNo = (Department) cmbDept.getSelectedItem();
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		Date joinDate = null;
+		try {
+			joinDate = sdf.parse(tfJoinDate.getText().trim());//parse : date로 바꿔줌
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+		return new Employee(empNo, empName, title, salary, gender, deptNo, joinDate);
+	}
+	protected void do_btnCancel_actionPerformed(ActionEvent e) {
+		//btnCancel입력시
+		cleartf();
+	}
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
