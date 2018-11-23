@@ -48,7 +48,7 @@ public class Employee {
 
 	public Title getTitle() {
 		return title;
-	}
+	} 
 
 	public void setTitle(Title title) {
 		this.title = title;
@@ -90,6 +90,33 @@ public class Employee {
 	public String toString() {
 		return String.format("Employee [%s, %s, %s, %s, %s, %s, %s]",empNo, empName, title, salary, gender, deptNo, joinDate);
 	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((empNo == null) ? 0 : empNo.hashCode()); 
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Employee other = (Employee) obj;
+		if (empNo == null) {
+			if (other.empNo != null)
+				return false;
+		} else if (!empNo.equals(other.empNo))
+			return false;
+		return true;
+	}
+	
+	
 	
 	
 }

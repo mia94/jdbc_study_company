@@ -5,161 +5,374 @@ import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.JPopupMenu;
 import javax.swing.border.EmptyBorder;
 import javax.swing.BoxLayout;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JLabel;
+import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import java.awt.GridLayout;
+import java.sql.SQLException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.List;
+import java.util.Vector;
+
 import javax.swing.SwingConstants;
 import javax.swing.JComboBox;
 import javax.swing.JSpinner;
 import javax.swing.JRadioButton;
 import javax.swing.JButton;
+
+import jdbc_study_company.dto.Department;
+import jdbc_study_company.dto.Employee;
+import jdbc_study_company.dto.Gender;
+import jdbc_study_company.dto.Title;
+import jdbc_study_company.jdbc.LogUtil;
+import jdbc_study_company.service.EmployeeService;
 import jdbc_study_company.ui.list.EmployeePanel;
 import javax.swing.SpinnerNumberModel;
+import org.eclipse.wb.swing.FocusTraversalOnArray;
+import java.awt.Component;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+import javax.swing.ButtonGroup;
 
-public class EmployeeManagementUi extends JFrame {
+public class EmployeeManagementUi extends JFrame implements ActionListener {
 
 	private JPanel contentPane;
-	private JTextField textField;
-	private JTextField textField_1;
-	private JTextField textField_2;
-
+	private JTextField tfEmpNo;
+	private JTextField tfEmpName;
+	private JTextField tfJoinDate;
+	
+	private EmployeePanel empPanel;
+	private EmployeeService service;
+	
+	List<Employee> list;
+	private JComboBox<Title> cmbTitle;
+	private JComboBox<Department> cmbDept;
+	private JButton btnOk;
+	private JButton btnCancel;
+	private JSpinner spinSalary;
+	private JRadioButton rdbtnMale;
+	private JRadioButton rdbtnFemale;
+	private final ButtonGroup buttonGroup = new ButtonGroup();
 	/**
 	 * Create the frame.
 	 */
 	public EmployeeManagementUi() {
-		initComponents();
+		service = new EmployeeService();
+		initComponents(); 
 	}
 	private void initComponents() {
 		setTitle("사원관리");
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 473, 403);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(new BoxLayout(contentPane, BoxLayout.Y_AXIS));
 		
-		JPanel panel = new JPanel();
-		contentPane.add(panel);
-		panel.setLayout(new GridLayout(0, 4, 0, 0));
+		JPanel pInput = new JPanel();
+		contentPane.add(pInput);
+		pInput.setLayout(new GridLayout(0, 4, 0, 0));
 		
 		JLabel lblNewLabel_1 = new JLabel("");
-		panel.add(lblNewLabel_1);
+		pInput.add(lblNewLabel_1);
 		
-		JLabel lblNewLabel = new JLabel("번호");
-		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		panel.add(lblNewLabel);
+		JLabel lblEmpNo = new JLabel("번호");
+		lblEmpNo.setHorizontalAlignment(SwingConstants.CENTER);
+		pInput.add(lblEmpNo);
 		
-		textField = new JTextField();
-		panel.add(textField);
-		textField.setColumns(10);
+		tfEmpNo = new JTextField();
+		tfEmpNo.setEditable(false);
+		//다음번호 자동 추가해두기
+		try {
+			tfEmpNo.setText(service.nextNoEmpNo());
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		pInput.add(tfEmpNo);
+		tfEmpNo.setColumns(10);
 		
 		JLabel lblNewLabel_2 = new JLabel("");
-		panel.add(lblNewLabel_2);
+		pInput.add(lblNewLabel_2);
 		
 		JLabel label = new JLabel("");
-		panel.add(label);
+		pInput.add(label);
 		
-		JLabel label_1 = new JLabel("사원명");
-		label_1.setHorizontalAlignment(SwingConstants.CENTER);
-		panel.add(label_1);
+		JLabel lblEmpName = new JLabel("사원명");
+		lblEmpName.setHorizontalAlignment(SwingConstants.CENTER);
+		pInput.add(lblEmpName);
 		
-		textField_1 = new JTextField();
-		textField_1.setColumns(10);
-		panel.add(textField_1);
+		tfEmpName = new JTextField();
+		tfEmpName.setColumns(10);
+		pInput.add(tfEmpName);
 		
 		JLabel label_2 = new JLabel("");
-		panel.add(label_2);
+		pInput.add(label_2);
 		
 		JLabel label_3 = new JLabel("");
-		panel.add(label_3);
+		pInput.add(label_3);
 		
-		JLabel label_4 = new JLabel("직책");
-		label_4.setHorizontalAlignment(SwingConstants.CENTER);
-		panel.add(label_4);
+		JLabel lblTitle = new JLabel("직책");
+		lblTitle.setHorizontalAlignment(SwingConstants.CENTER);
+		pInput.add(lblTitle);
 		
-		JComboBox comboBox = new JComboBox();
-		panel.add(comboBox);
+		//직책 comboBox
+		try {
+			DefaultComboBoxModel<Title> titleModel = new DefaultComboBoxModel<>(new Vector<>(service.selectTitleByAll()));
+			cmbTitle = new JComboBox<>(titleModel);
+			cmbTitle.setSelectedIndex(-1);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		pInput.add(cmbTitle);
 		
 		JLabel lblNewLabel_3 = new JLabel("");
-		panel.add(lblNewLabel_3);
+		pInput.add(lblNewLabel_3);
 		
 		JLabel label_5 = new JLabel("");
-		panel.add(label_5);
+		pInput.add(label_5);
 		
-		JLabel label_6 = new JLabel("급여");
-		label_6.setHorizontalAlignment(SwingConstants.CENTER);
-		panel.add(label_6);
+		JLabel lblSalary = new JLabel("급여");
+		lblSalary.setHorizontalAlignment(SwingConstants.CENTER);
+		pInput.add(lblSalary);
 		
-		JSpinner spinner = new JSpinner();
-		spinner.setModel(new SpinnerNumberModel(1500000, 1000000, 5000000, 100000));
-		panel.add(spinner);
+		spinSalary = new JSpinner();
+		spinSalary.setModel(new SpinnerNumberModel(1500000, 1000000, 5000000, 100000));
+		pInput.add(spinSalary);
 		
 		JLabel lblNewLabel_4 = new JLabel("");
-		panel.add(lblNewLabel_4);
+		pInput.add(lblNewLabel_4);
 		
 		JLabel lblNewLabel_5 = new JLabel("");
-		panel.add(lblNewLabel_5);
+		pInput.add(lblNewLabel_5);
 		
-		JLabel label_7 = new JLabel("성별");
-		label_7.setHorizontalAlignment(SwingConstants.CENTER);
-		panel.add(label_7);
+		JLabel lblGender = new JLabel("성별");
+		lblGender.setHorizontalAlignment(SwingConstants.CENTER);
+		pInput.add(lblGender);
 		
 		JPanel panel_3 = new JPanel();
-		panel.add(panel_3);
+		pInput.add(panel_3);
 		
-		JRadioButton rdbtnNewRadioButton = new JRadioButton("남");
-		panel_3.add(rdbtnNewRadioButton);
+		rdbtnMale = new JRadioButton("남");
+		buttonGroup.add(rdbtnMale);
+		rdbtnMale.setSelected(true);
+		panel_3.add(rdbtnMale);
 		
-		JRadioButton rdbtnNewRadioButton_1 = new JRadioButton("여");
-		panel_3.add(rdbtnNewRadioButton_1);
+		rdbtnFemale = new JRadioButton("여");
+		buttonGroup.add(rdbtnFemale);
+		panel_3.add(rdbtnFemale);
+		panel_3.setFocusTraversalPolicy(new FocusTraversalOnArray(new Component[]{rdbtnMale, rdbtnFemale}));
 		
 		JLabel lblNewLabel_6 = new JLabel("");
-		panel.add(lblNewLabel_6);
+		pInput.add(lblNewLabel_6);
 		
 		JLabel lblNewLabel_7 = new JLabel("");
-		panel.add(lblNewLabel_7);
+		pInput.add(lblNewLabel_7);
 		
-		JLabel lblNewLabel_8 = new JLabel("부서");
-		lblNewLabel_8.setHorizontalAlignment(SwingConstants.CENTER);
-		panel.add(lblNewLabel_8);
+		JLabel lblDept = new JLabel("부서");
+		lblDept.setHorizontalAlignment(SwingConstants.CENTER);
+		pInput.add(lblDept);
 		
-		JComboBox comboBox_1 = new JComboBox();
-		panel.add(comboBox_1);
+		//부서 ComboBox
+		DefaultComboBoxModel<Department> deptModel = new DefaultComboBoxModel<>(new Vector<>(service.selectDeptByAll()));
+		cmbDept = new JComboBox<>(deptModel);
+		cmbDept.setSelectedIndex(-1);
+		pInput.add(cmbDept);
 		
 		JLabel lblNewLabel_9 = new JLabel("");
-		panel.add(lblNewLabel_9);
+		pInput.add(lblNewLabel_9);
 		
 		JLabel lblNewLabel_10 = new JLabel("");
-		panel.add(lblNewLabel_10);
+		pInput.add(lblNewLabel_10);
 		
-		JLabel lblNewLabel_11 = new JLabel("입사일");
-		lblNewLabel_11.setHorizontalAlignment(SwingConstants.CENTER);
-		panel.add(lblNewLabel_11);
+		JLabel lblJoinDate = new JLabel("입사일");
+		lblJoinDate.setHorizontalAlignment(SwingConstants.CENTER);
+		pInput.add(lblJoinDate);
 		
-		textField_2 = new JTextField();
-		panel.add(textField_2);
-		textField_2.setColumns(10);
+		tfJoinDate = new JTextField();
+		tfJoinDate.setHorizontalAlignment(SwingConstants.RIGHT);
+		
+		//날짜
+		tfJoinDate.setText(String.format("%tF", new Date()));
+		pInput.add(tfJoinDate);
+		tfJoinDate.setColumns(10);
 		
 		JLabel lblNewLabel_13 = new JLabel("");
-		panel.add(lblNewLabel_13);
+		pInput.add(lblNewLabel_13);
 		
-		JPanel panel_1 = new JPanel();
-		contentPane.add(panel_1);
-		panel_1.setLayout(new GridLayout(0, 4, 0, 0));
+		JPanel pBtn = new JPanel();
+		contentPane.add(pBtn);
+		pBtn.setLayout(new GridLayout(0, 4, 0, 0));
 		
 		JLabel lblNewLabel_12 = new JLabel("");
-		panel_1.add(lblNewLabel_12);
+		pBtn.add(lblNewLabel_12);
 		
-		JButton btnNewButton = new JButton("추가");
-		panel_1.add(btnNewButton);
+		btnOk = new JButton("추가");
+		btnOk.addActionListener(this);
+		pBtn.add(btnOk);
 		
-		JButton btnNewButton_1 = new JButton("취소");
-		panel_1.add(btnNewButton_1);
+		btnCancel = new JButton("취소");
+		btnCancel.addActionListener(this);
+		pBtn.add(btnCancel);
 		
-		EmployeePanel panel_2 = new EmployeePanel();
-		contentPane.add(panel_2);
+		//테이블 뜨는 곳
+		list = service.selectEmployeeByAll();
+		empPanel = new EmployeePanel();
+		empPanel.setList(list);
+		empPanel.loadDatas();
+		//popUp메뉴
+		empPanel.setPopupMenu(createEmpPopUpMenu());
+		
+		contentPane.add(empPanel);
 	}
 
+	private JPopupMenu createEmpPopUpMenu() {
+		JPopupMenu popMenu = new JPopupMenu();
+		
+		JMenuItem updateItem =  new JMenuItem("수정");
+		updateItem.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				Employee item = empPanel.getSelectedItem();
+				setItem(item);
+				btnOk.setText("수정");
+			}
+			
+		});
+		popMenu.add(updateItem);
+		
+		JMenuItem delItem = new JMenuItem("삭제");
+		delItem.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				try {
+					service.deleteEmp(empPanel.getSelectedItem());
+					empPanel.setList(service.selectEmployeeByAll());
+					empPanel.loadDatas();
+				} catch (SQLException e1) {
+					e1.printStackTrace();
+				}
+				
+			}
+		});
+		popMenu.add(delItem);
+		
+		return popMenu;
+	}
+	
+	private void cleartf() {
+		tfEmpName.setText("");
+		cmbTitle.setSelectedIndex(-1);
+		spinSalary.setModel(new SpinnerNumberModel(1500000, 1000000, 5000000, 100000));
+		rdbtnMale.setSelected(true);
+		cmbDept.setSelectedIndex(-1);
+		tfJoinDate.setText(String.format("%tF", new Date()));
+	}
+	private void setItem(Employee item) {
+		LogUtil.prnLog(item.getDeptNo().getDeptNo());
+		tfEmpNo.setText(item.getEmpNo());
+		tfEmpName.setText(item.getEmpName());
+		spinSalary.setValue(item.getSalary());
+		cmbTitle.setSelectedItem(item.getTitle());
+		if(item.getGender()==Gender.FEMALE) {
+			rdbtnFemale.setSelected(true);
+		}else {
+			rdbtnMale.setSelected(true);
+		}
+		cmbDept.setSelectedItem(item.getDeptNo());
+		tfJoinDate.setText(String.format("%tF", item.getJoinDate()));
+	}
+	
+	private Employee getItem() {
+		String empNo = tfEmpNo.getText().trim();
+		String empName = tfEmpName.getText().trim();
+		Title title = (Title) cmbTitle.getSelectedItem();
+		int salary = (int) spinSalary.getValue();
+		Gender gender = null;
+		if(rdbtnFemale.isSelected()) {
+			gender = Gender.FEMALE;
+		}else {
+			gender = Gender.MALE;
+		}
+		Department deptNo = (Department) cmbDept.getSelectedItem();
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		Date joinDate = null;
+		try {
+			joinDate = sdf.parse(tfJoinDate.getText().trim());//parse : date로 바꿔줌
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+		return new Employee(empNo, empName, title, salary, gender, deptNo, joinDate);
+	}
+	
+	public void actionPerformed(ActionEvent e) {
+		if (e.getSource() == btnCancel) {
+			do_btnCancel_actionPerformed(e);
+		}
+		if (e.getSource() == btnOk) {
+			if(btnOk.getText()=="추가") {
+				do_btnOk_actionPerformed(e);
+			}else {
+				do_btnUpdate_actionPerformed(e);
+			}
+			
+		}
+	}
+	
+	private void do_btnUpdate_actionPerformed(ActionEvent e) {
+		//수정버튼 클릭시
+		Employee item = getItem();
+		try {
+			service.updateEmp(item);
+			empPanel.setList(service.selectEmployeeByAll());
+			empPanel.loadDatas();
+			cleartf();
+			btnOk.setText("추가");
+		} catch (SQLException e1) {
+			e1.printStackTrace();
+		}
+		
+	}
+	protected void do_btnOk_actionPerformed(ActionEvent e) {
+		//btnOk입력시
+		if(tfEmpName.getText().equals("")) {//문자열 비교는 equal사용하기!!!!!!
+			JOptionPane.showMessageDialog(null, "사원명을 입력하세요.");
+			return;
+		}
+		Employee item = getItem();
+		try {
+			service.insertEmp(item);
+			empPanel.setList(service.selectEmployeeByAll());
+			empPanel.loadDatas();
+			cleartf();
+		} catch (SQLException e1) {
+			e1.printStackTrace();
+		}
+	
+	}
+	
+	protected void do_btnCancel_actionPerformed(ActionEvent e) {
+		//btnCancel입력시
+		cleartf();
+	}
 }
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -5,10 +5,12 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
 import javax.print.attribute.standard.PresentationDirection;
+import javax.swing.JOptionPane;
 
 import jdbc_study_company.dto.Department;
 import jdbc_study_company.dto.Employee;
@@ -22,7 +24,7 @@ public class EmployeeDaoImpl implements EmployeeDao {
 	@Override
 	public List<Employee> selectEmployeeByAll() {
 			List<Employee> list = new ArrayList<>();
-			String sql = "select e.empno, e.empname, t.tno , t.tname, e.salary, e.gender, d.deptname, d.floor, e.joindate from employee e join department d on e.deptno = d.deptno join title t on e.title = t.tno";
+			String sql = "select e.empno, e.empname, t.tno , t.tname, e.salary, e.gender, d.deptno, d.deptname, d.floor, e.joindate from employee e join department d on e.deptno = d.deptno join title t on e.title = t.tno";
 			try(Connection conn = ConnectionProvider.getConnection();
 					PreparedStatement pstmt = conn.prepareStatement(sql);
 					ResultSet rs = pstmt.executeQuery()){
@@ -42,7 +44,7 @@ public class EmployeeDaoImpl implements EmployeeDao {
 		Title title = new Title(rs.getString("tno"), rs.getString("tname"));
 		int salary = rs.getInt("salary");
 		Gender gender = rs.getInt("gender")==0?Gender.FEMALE:Gender.MALE;
-		Department deptNo = new Department(rs.getString("deptname"), rs.getInt("floor"));
+		Department deptNo = new Department(rs.getString("deptno"),rs.getString("deptname"), rs.getInt("floor"));
 		Date joinDate = rs.getDate("joindate");
 		return new Employee(empNo, empName, title, salary, gender, deptNo, joinDate);
 	}
@@ -91,7 +93,7 @@ public class EmployeeDaoImpl implements EmployeeDao {
 			pstmt.setInt(4, item.getSalary());
 			pstmt.setInt(5,(item.getGender())==Gender.FEMALE?0:1);
 			pstmt.setString(6, item.getDeptNo().getDeptNo());
-			pstmt.setString(7, String.format("%tF", item.getJoinDate()));
+			pstmt.setString(7, String.format("%tF", item.getJoinDate())); 
 			pstmt.setString(8, item.getEmpNo());
 			LogUtil.prnLog(pstmt);
 			row = pstmt.executeUpdate();
@@ -110,7 +112,10 @@ public class EmployeeDaoImpl implements EmployeeDao {
 			LogUtil.prnLog(pstmt);
 			if(rs.next()) {			
 				int no = Integer.parseInt(rs.getString("nextno").substring(4))+1;
-				nextNo = String.format("E017%03d", no);
+				Calendar cal = Calendar.getInstance();
+				String strYear = (cal.get(cal.YEAR)+"").substring(1);
+//				int year = Integer.parseInt(strYear);
+				nextNo = String.format("E%3s%03d",strYear, no);
 			}
 		}
 		return nextNo;

@@ -17,6 +17,7 @@ import java.util.List;
 
 import javax.swing.JLabel;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.print.DocFlavor.STRING;
@@ -175,7 +176,7 @@ public class DepartmentManagementUi extends JFrame implements ActionListener {
 			if(btnAdd.getText()=="추가") {
 				do_btnAdd_actionPerformed(e);
 			}else {
-				do_btnUpdate_actionPerformed(e);
+				do_btnUpdate_actionPerformed(e); 
 			}
 			
 		}
@@ -217,7 +218,7 @@ public class DepartmentManagementUi extends JFrame implements ActionListener {
 	
 	private void setItem(Department item) {
 		tfDeptNo.setText(item.getDeptNo());
-		tfDeptName.setText(item.getDaptName());
+		tfDeptName.setText(item.getDeptName());
 		tfFloor.setText(item.getFloor() + "");
 	}
 	protected void do_btnCancel_actionPerformed(ActionEvent e) {

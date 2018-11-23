@@ -2,33 +2,29 @@ package jdbc_study_company.dto;
 
 public class Department {
 	private String deptNo;
-	private String daptName;
+	private String deptName;
 	private int floor;
 	
 	public Department() { 
 		
 	}
 
-	public Department(String deptNo, String daptName, int floor) {
+	public Department(String deptNo, String deptName, int floor) {
 		super();
 		this.deptNo = deptNo;
-		this.daptName = daptName;
+		this.deptName = deptName;
 		this.floor = floor;
-	}
+	} 
 	
-	public Department(String daptName, int floor) {
-		this.daptName = daptName;
+	public Department(String deptName, int floor) {
+		this.deptName = deptName;
 		this.floor = floor;
-	}
+	} 
 
 	public Department(String deptNo) {
 		this.deptNo = deptNo;
 	}
 
-	@Override
-	public String toString() {
-		return String.format("Department [%s, %s, %s]", deptNo, daptName, floor);
-	}
 	//GET SET
 	public String getDeptNo() {
 		return deptNo;
@@ -38,12 +34,12 @@ public class Department {
 		this.deptNo = deptNo;
 	}
 
-	public String getDaptName() {
-		return daptName;
+	public String getDeptName() {
+		return deptName;
 	}
 
-	public void setDaptName(String daptName) {
-		this.daptName = daptName;
+	public void setDeptName(String daptName) {
+		this.deptName = daptName;
 	}
 
 	public int getFloor() {
@@ -53,5 +49,37 @@ public class Department {
 	public void setFloor(int floor) {
 		this.floor = floor;
 	}
+
+	@Override
+	public String toString() {
+		return String.format("%s(%s)", deptName, floor);
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((deptNo == null) ? 0 : deptNo.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Department other = (Department) obj;
+		if (deptNo == null) {
+			if (other.deptNo != null)
+				return false;
+		} else if (!deptNo.equals(other.deptNo))
+			return false;
+		return true;
+	}
+	
+
 	
 }

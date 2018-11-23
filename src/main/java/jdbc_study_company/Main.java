@@ -17,7 +17,7 @@ public class Main {
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
-				}
+				} 
 			}
 		});
 	}
