@@ -92,6 +92,7 @@ public class EmployeeDaoImpl implements EmployeeDao {
 			pstmt.setInt(5,(item.getGender())==Gender.FEMALE?0:1);
 			pstmt.setString(6, item.getDeptNo().getDeptNo());
 			pstmt.setString(7, String.format("%tF", item.getJoinDate()));
+			pstmt.setString(8, item.getEmpNo());
 			LogUtil.prnLog(pstmt);
 			row = pstmt.executeUpdate();
 		}

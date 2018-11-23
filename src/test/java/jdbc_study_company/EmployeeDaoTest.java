@@ -68,6 +68,15 @@ public class EmployeeDaoTest {
 		Assert.assertEquals(1, row);
 		test01selectEmployeeByAll();
 	}
+	
+	@Test
+	public void test04updateEmployee() throws SQLException {
+		Employee updateEmp = new Employee("E017003","너부장2",new Title("T002"),40000002,Gender.FEMALE,new Department("D002"),new Date());
+		int row = dao.updateEmployee(updateEmp);
+		LogUtil.prnLog("update row :"+row);
+		Assert.assertEquals(1, row);
+		test01selectEmployeeByAll();
+	}
 }
 
 
