@@ -172,11 +172,13 @@ public class EmployeeManagementUi extends JFrame {
 		JButton btnCancel = new JButton("취소");
 		pBtn.add(btnCancel);
 		
-		EmployeePanel pEmpTable = new EmployeePanel();
+		//테이블 뜨는 곳
 		list = service.selectEmployeeByAll();
+		EmployeePanel empPanel = new EmployeePanel();
+		empPanel.setList(list);
+		empPanel.loadDatas();
 		
-		
-		contentPane.add(pEmpTable);
+		contentPane.add(empPanel);
 	}
 
 }
