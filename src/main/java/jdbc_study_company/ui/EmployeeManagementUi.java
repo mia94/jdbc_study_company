@@ -15,6 +15,7 @@ import javax.swing.JComboBox;
 import javax.swing.JSpinner;
 import javax.swing.JRadioButton;
 import javax.swing.JButton;
+import jdbc_study_company.ui.list.EmployeePanel;
 
 public class EmployeeManagementUi extends JFrame {
 
@@ -155,7 +156,7 @@ public class EmployeeManagementUi extends JFrame {
 		JButton btnNewButton_1 = new JButton("취소");
 		panel_1.add(btnNewButton_1);
 		
-		JPanel panel_2 = new JPanel();
+		EmployeePanel panel_2 = new EmployeePanel();
 		contentPane.add(panel_2);
 	}
 

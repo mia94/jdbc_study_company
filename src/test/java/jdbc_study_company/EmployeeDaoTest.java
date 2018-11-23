@@ -43,7 +43,7 @@ public class EmployeeDaoTest {
 		System.out.println();
 	}
 
-	@Test
+/*	@Test
 	public void test01selectEmployeeByAll() {
 		List<Employee> list = dao.selectEmployeeByAll();
 		LogUtil.prnLog(list.toString());
@@ -76,7 +76,7 @@ public class EmployeeDaoTest {
 		LogUtil.prnLog("update row :"+row);
 		Assert.assertEquals(1, row);
 		test01selectEmployeeByAll();
-	}
+	}*/
 }
 
 

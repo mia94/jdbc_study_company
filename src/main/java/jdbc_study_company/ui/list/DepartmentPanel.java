@@ -4,6 +4,8 @@ import jdbc_study_company.dto.Department;
 
 @SuppressWarnings("serial")
 public class DepartmentPanel extends AbstractPanel<Department> {
+	public DepartmentPanel() {
+	}
 	
 
 	protected Object[] getItemrow(Department item) {

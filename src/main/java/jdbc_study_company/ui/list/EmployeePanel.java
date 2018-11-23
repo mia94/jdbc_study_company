@@ -9,6 +9,8 @@ import jdbc_study_company.dto.Title;
 
 @SuppressWarnings("serial")
 public class EmployeePanel extends AbstractPanel<Employee> {
+	public EmployeePanel() {
+	}
 
 	@Override
 	protected Object[] getItemrow(Employee item) {
