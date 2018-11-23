@@ -175,7 +175,7 @@ public class DepartmentManagementUi extends JFrame implements ActionListener {
 			if(btnAdd.getText()=="추가") {
 				do_btnAdd_actionPerformed(e);
 			}else {
-				do_btnUpdate_actionPerformed(e);
+				do_btnUpdate_actionPerformed(e); 
 			}
 			
 		}

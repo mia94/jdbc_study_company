@@ -5,15 +5,18 @@ import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.JPopupMenu;
 import javax.swing.border.EmptyBorder;
 import javax.swing.BoxLayout;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JLabel;
+import javax.swing.JMenuItem;
 import javax.swing.JTextField;
 import java.awt.GridLayout;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Vector;
@@ -63,7 +66,7 @@ public class EmployeeManagementUi extends JFrame implements ActionListener {
 	}
 	private void initComponents() {
 		setTitle("사원관리");
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 473, 403);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -189,7 +192,9 @@ public class EmployeeManagementUi extends JFrame implements ActionListener {
 		
 		tfJoinDate = new JTextField();
 		tfJoinDate.setHorizontalAlignment(SwingConstants.RIGHT);
-		tfJoinDate.setText("0000-00-00");
+		
+		//날짜
+		tfJoinDate.setText(String.format("%tF", new Date()));
 		pInput.add(tfJoinDate);
 		tfJoinDate.setColumns(10);
 		
@@ -216,41 +221,64 @@ public class EmployeeManagementUi extends JFrame implements ActionListener {
 		empPanel = new EmployeePanel();
 		empPanel.setList(list);
 		empPanel.loadDatas();
+		//popUp메뉴
+		empPanel.setPopupMenu(createEmpPopUpMenu());
 		
 		contentPane.add(empPanel);
 	}
 
-	public void actionPerformed(ActionEvent e) {
-		if (e.getSource() == btnCancel) {
-			do_btnCancel_actionPerformed(e);
-		}
-		if (e.getSource() == btnOk) {
-			do_btnOk_actionPerformed(e);
-		}
+	private JPopupMenu createEmpPopUpMenu() {
+		JPopupMenu popMenu = new JPopupMenu();
+		
+		JMenuItem updateItem =  new JMenuItem("수정");
+		updateItem.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				Employee item = empPanel.getSelectedItem();
+				setItem(item);
+				btnOk.setText("수정");
+			}
+			
+		});
+		popMenu.add(updateItem);
+		
+		JMenuItem delItem = new JMenuItem("삭제");
+		delItem.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				try {
+					service.deleteEmp(empPanel.getSelectedItem());
+					empPanel.setList(service.selectEmployeeByAll());
+					empPanel.loadDatas();
+				} catch (SQLException e1) {
+					e1.printStackTrace();
+				}
+				
+			}
+		});
+		popMenu.add(delItem);
+		
+		return popMenu;
 	}
-	protected void do_btnOk_actionPerformed(ActionEvent e) {
-		//btnOk입력시
-		Employee item = getItem();
-		try {
-			service.insertEmp(item);
-			empPanel.setList(service.selectEmployeeByAll());
-			empPanel.loadDatas();
-			cleartf();
-		} catch (SQLException e1) {
-			e1.printStackTrace();
-		}
 	
-	}
 	private void cleartf() {
 		tfEmpName.setText("");
 		cmbTitle.setSelectedIndex(-1);
 		spinSalary.setModel(new SpinnerNumberModel(1500000, 1000000, 5000000, 100000));
 		rdbtnMale.setSelected(true);
 		cmbDept.setSelectedIndex(-1);
-		tfJoinDate.setText("0000-00-00");
+		tfJoinDate.setText(String.format("%tF", new Date()));
 	}
+	private void setItem(Employee item) {
+		tfEmpNo.setText(item.getEmpNo());
+		tfEmpName.setText(item.getEmpName());
+		cmbTitle.setSelectedIndex(-1);
+		rdbtnMale.setSelected(true);
+		cmbDept.setSelectedIndex(-1);
+		tfJoinDate.setText(String.format("%tF", item.getJoinDate()));
+	}
+	
 	private Employee getItem() {
-		
 		String empNo = tfEmpNo.getText().trim();
 		String empName = tfEmpName.getText().trim();
 		Title title = (Title) cmbTitle.getSelectedItem();
@@ -271,6 +299,49 @@ public class EmployeeManagementUi extends JFrame implements ActionListener {
 		}
 		return new Employee(empNo, empName, title, salary, gender, deptNo, joinDate);
 	}
+	
+	public void actionPerformed(ActionEvent e) {
+		if (e.getSource() == btnCancel) {
+			do_btnCancel_actionPerformed(e);
+		}
+		if (e.getSource() == btnOk) {
+			if(btnOk.getText()=="추가") {
+				do_btnOk_actionPerformed(e);
+			}else {
+				do_btnUpdate_actionPerformed(e);
+			}
+			
+		}
+	}
+	
+	private void do_btnUpdate_actionPerformed(ActionEvent e) {
+		//수정버튼 클릭시
+		Employee item = getItem();
+		try {
+			service.updateEmp(item);
+			empPanel.setList(service.selectEmployeeByAll());
+			empPanel.loadDatas();
+			cleartf();
+			btnOk.setText("추가");
+		} catch (SQLException e1) {
+			e1.printStackTrace();
+		}
+		
+	}
+	protected void do_btnOk_actionPerformed(ActionEvent e) {
+		//btnOk입력시
+		Employee item = getItem();
+		try {
+			service.insertEmp(item);
+			empPanel.setList(service.selectEmployeeByAll());
+			empPanel.loadDatas();
+			cleartf();
+		} catch (SQLException e1) {
+			e1.printStackTrace();
+		}
+	
+	}
+	
 	protected void do_btnCancel_actionPerformed(ActionEvent e) {
 		//btnCancel입력시
 		cleartf();

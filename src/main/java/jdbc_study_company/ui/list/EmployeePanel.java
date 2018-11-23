@@ -35,14 +35,17 @@ public class EmployeePanel extends AbstractPanel<Employee> {
 
 	@Override
 	protected Employee getItem(int selectedRow) {
-		String empNo = (String) table.getModel().getValueAt(selectedRow, 0);
-		String empName = (String) table.getModel().getValueAt(selectedRow, 1);
+		String empNo = (String) table.getValueAt(selectedRow, 0);
+		Employee newEmp = new Employee(empNo);
+	 	int index = list.indexOf(newEmp); 
+	 	return list.get(index);
+		/*String empName = (String) table.getModel().getValueAt(selectedRow, 1);
 		Title title = (Title) table.getModel().getValueAt(selectedRow, 3);
 		int salary = (int) table.getModel().getValueAt(selectedRow, 4);
 		Gender gender = (Gender) table.getModel().getValueAt(selectedRow, 5);
 		Department deptNo = (Department) table.getModel().getValueAt(selectedRow, 6);
-		Date joinDate = (Date) table.getModel().getValueAt(selectedRow, 6);
-		return new Employee(empNo, empName, title, salary, gender, deptNo, joinDate);
+		Date joinDate = (Date) table.getModel().getValueAt(selectedRow, 6);*/
+		
 	}
 
 }

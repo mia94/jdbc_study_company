@@ -5,6 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -91,7 +92,7 @@ public class EmployeeDaoImpl implements EmployeeDao {
 			pstmt.setInt(4, item.getSalary());
 			pstmt.setInt(5,(item.getGender())==Gender.FEMALE?0:1);
 			pstmt.setString(6, item.getDeptNo().getDeptNo());
-			pstmt.setString(7, String.format("%tF", item.getJoinDate()));
+			pstmt.setString(7, String.format("%tF", item.getJoinDate())); 
 			pstmt.setString(8, item.getEmpNo());
 			LogUtil.prnLog(pstmt);
 			row = pstmt.executeUpdate();
@@ -110,7 +111,10 @@ public class EmployeeDaoImpl implements EmployeeDao {
 			LogUtil.prnLog(pstmt);
 			if(rs.next()) {			
 				int no = Integer.parseInt(rs.getString("nextno").substring(4))+1;
-				nextNo = String.format("E017%03d", no);
+				Calendar cal = Calendar.getInstance();
+				String strYear = (cal.get(cal.YEAR)+"").substring(1);
+//				int year = Integer.parseInt(strYear);
+				nextNo = String.format("E%3s%03d",strYear, no);
 			}
 		}
 		return nextNo;
