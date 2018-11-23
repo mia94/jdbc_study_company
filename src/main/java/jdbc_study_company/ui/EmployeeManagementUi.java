@@ -7,11 +7,13 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.BoxLayout;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 import java.awt.GridLayout;
 import java.sql.SQLException;
 import java.util.List;
+import java.util.Vector;
 
 import javax.swing.SwingConstants;
 import javax.swing.JComboBox;
@@ -20,6 +22,7 @@ import javax.swing.JRadioButton;
 import javax.swing.JButton;
 
 import jdbc_study_company.dto.Employee;
+import jdbc_study_company.dto.Title;
 import jdbc_study_company.service.EmployeeService;
 import jdbc_study_company.ui.list.EmployeePanel;
 import javax.swing.SpinnerNumberModel;
@@ -37,6 +40,7 @@ public class EmployeeManagementUi extends JFrame {
 	private EmployeeService service;
 	
 	List<Employee> list;
+	private JComboBox cmbTitle;
 	/**
 	 * Create the frame.
 	 */
@@ -99,7 +103,14 @@ public class EmployeeManagementUi extends JFrame {
 		lblTitle.setHorizontalAlignment(SwingConstants.CENTER);
 		pInput.add(lblTitle);
 		
-		JComboBox cmbTitle = new JComboBox();
+		//직책 comboBox
+		try {
+			DefaultComboBoxModel<Title> titleModel = new DefaultComboBoxModel<>(new Vector<>(service.selectTitleByAll()));
+			cmbTitle = new JComboBox<>(titleModel);
+			cmbTitle.setSelectedIndex(-1);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 		pInput.add(cmbTitle);
 		
 		JLabel lblNewLabel_3 = new JLabel("");
