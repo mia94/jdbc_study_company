@@ -30,7 +30,7 @@ public class EmployeeService {
 		return dao.updateEmployee(item);
 	}
 	
-	public String nextNoDeptNo() throws SQLException {
+	public String nextNoEmpNo() throws SQLException {
 		return dao.nextNoEmployee();
 	}
 }
