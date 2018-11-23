@@ -16,6 +16,7 @@ import javax.swing.JSpinner;
 import javax.swing.JRadioButton;
 import javax.swing.JButton;
 import jdbc_study_company.ui.list.EmployeePanel;
+import javax.swing.SpinnerNumberModel;
 
 public class EmployeeManagementUi extends JFrame {
 
@@ -92,6 +93,7 @@ public class EmployeeManagementUi extends JFrame {
 		panel.add(label_6);
 		
 		JSpinner spinner = new JSpinner();
+		spinner.setModel(new SpinnerNumberModel(1500000, 1000000, 5000000, 100000));
 		panel.add(spinner);
 		
 		JLabel lblNewLabel_4 = new JLabel("");
