@@ -19,6 +19,9 @@ public class CompanyManagementUi extends JFrame implements ActionListener {
 	private JButton btnEmployeeMangement;
 	private JButton btnDepartmentManagement;
 	private JButton btnTitleManagement;
+	private EmployeeManagementUi empUi;
+	private DepartmentManagementUi deptUi;
+	private TitleManagementUi titleUi;
 
 	/**
 	 * Create the frame.
@@ -29,7 +32,7 @@ public class CompanyManagementUi extends JFrame implements ActionListener {
 	private void initComponents() {
 		setTitle("ERP관리프로그램");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 449, 152);
+		setBounds(100, 100, 449, 152); 
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		contentPane.setLayout(new BorderLayout(0, 0));
@@ -64,21 +67,24 @@ public class CompanyManagementUi extends JFrame implements ActionListener {
 		}
 	}
 	protected void do_btnEmployeeMangement_actionPerformed(ActionEvent e) {
-		//사원관리 버튼 클릭시 사원관리창띄우기
-		EmployeeManagementUi ui = new EmployeeManagementUi();
-		ui.setVisible(true);
+		if(empUi==null) {
+			empUi = new EmployeeManagementUi();
+		}
+		empUi.setVisible(true);
 		
 	}
 	protected void do_btnDepartmentManagement_actionPerformed(ActionEvent e) {
-		//부서관리 버튼 클릭시 사원관리창띄우기
-		DepartmentManagementUi ui = new DepartmentManagementUi();
-		ui.setVisible(true);
+		if(deptUi==null) {
+			deptUi = new DepartmentManagementUi();
+		}
+		deptUi.setVisible(true);
 		
 	}
 	protected void do_btnTitleManagement_actionPerformed(ActionEvent e) {
-		//직책관리 버튼 클릭시 사원관리창띄우기
-		TitleManagementUi ui = new TitleManagementUi();
-		ui.setVisible(true);
+		if(titleUi==null) {
+			titleUi = new TitleManagementUi();
+		}
+		titleUi.setVisible(true);
 	}
 	
 }

@@ -11,6 +11,7 @@ import javax.swing.BoxLayout;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JLabel;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import java.awt.GridLayout;
 import java.sql.SQLException;
@@ -31,6 +32,7 @@ import jdbc_study_company.dto.Department;
 import jdbc_study_company.dto.Employee;
 import jdbc_study_company.dto.Gender;
 import jdbc_study_company.dto.Title;
+import jdbc_study_company.jdbc.LogUtil;
 import jdbc_study_company.service.EmployeeService;
 import jdbc_study_company.ui.list.EmployeePanel;
 import javax.swing.SpinnerNumberModel;
@@ -38,6 +40,7 @@ import org.eclipse.wb.swing.FocusTraversalOnArray;
 import java.awt.Component;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import javax.swing.ButtonGroup;
 
 public class EmployeeManagementUi extends JFrame implements ActionListener {
 
@@ -50,19 +53,20 @@ public class EmployeeManagementUi extends JFrame implements ActionListener {
 	private EmployeeService service;
 	
 	List<Employee> list;
-	private JComboBox cmbTitle;
-	private JComboBox cmbDept;
+	private JComboBox<Title> cmbTitle;
+	private JComboBox<Department> cmbDept;
 	private JButton btnOk;
 	private JButton btnCancel;
 	private JSpinner spinSalary;
 	private JRadioButton rdbtnMale;
 	private JRadioButton rdbtnFemale;
+	private final ButtonGroup buttonGroup = new ButtonGroup();
 	/**
 	 * Create the frame.
 	 */
 	public EmployeeManagementUi() {
 		service = new EmployeeService();
-		initComponents();
+		initComponents(); 
 	}
 	private void initComponents() {
 		setTitle("사원관리");
@@ -157,10 +161,12 @@ public class EmployeeManagementUi extends JFrame implements ActionListener {
 		pInput.add(panel_3);
 		
 		rdbtnMale = new JRadioButton("남");
+		buttonGroup.add(rdbtnMale);
 		rdbtnMale.setSelected(true);
 		panel_3.add(rdbtnMale);
 		
 		rdbtnFemale = new JRadioButton("여");
+		buttonGroup.add(rdbtnFemale);
 		panel_3.add(rdbtnFemale);
 		panel_3.setFocusTraversalPolicy(new FocusTraversalOnArray(new Component[]{rdbtnMale, rdbtnFemale}));
 		
@@ -176,7 +182,7 @@ public class EmployeeManagementUi extends JFrame implements ActionListener {
 		
 		//부서 ComboBox
 		DefaultComboBoxModel<Department> deptModel = new DefaultComboBoxModel<>(new Vector<>(service.selectDeptByAll()));
-		cmbDept = new JComboBox(deptModel);
+		cmbDept = new JComboBox<>(deptModel);
 		cmbDept.setSelectedIndex(-1);
 		pInput.add(cmbDept);
 		
@@ -270,11 +276,17 @@ public class EmployeeManagementUi extends JFrame implements ActionListener {
 		tfJoinDate.setText(String.format("%tF", new Date()));
 	}
 	private void setItem(Employee item) {
+		LogUtil.prnLog(item.getDeptNo().getDeptNo());
 		tfEmpNo.setText(item.getEmpNo());
 		tfEmpName.setText(item.getEmpName());
-		cmbTitle.setSelectedIndex(-1);
-		rdbtnMale.setSelected(true);
-		cmbDept.setSelectedIndex(-1);
+		spinSalary.setValue(item.getSalary());
+		cmbTitle.setSelectedItem(item.getTitle());
+		if(item.getGender()==Gender.FEMALE) {
+			rdbtnFemale.setSelected(true);
+		}else {
+			rdbtnMale.setSelected(true);
+		}
+		cmbDept.setSelectedItem(item.getDeptNo());
 		tfJoinDate.setText(String.format("%tF", item.getJoinDate()));
 	}
 	
@@ -330,6 +342,10 @@ public class EmployeeManagementUi extends JFrame implements ActionListener {
 	}
 	protected void do_btnOk_actionPerformed(ActionEvent e) {
 		//btnOk입력시
+		if(tfEmpName.getText().equals("")) {//문자열 비교는 equal사용하기!!!!!!
+			JOptionPane.showMessageDialog(null, "사원명을 입력하세요.");
+			return;
+		}
 		Employee item = getItem();
 		try {
 			service.insertEmp(item);

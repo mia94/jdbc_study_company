@@ -13,13 +13,13 @@ public class EmployeePanel extends AbstractPanel<Employee> {
 	}
 
 	@Override
-	protected Object[] getItemrow(Employee item) {
+	protected Object[] getItemrow(Employee item) {//테이블에 출력
 		return new Object[] {
 				item.getEmpNo(),
 				item.getEmpName(),
 				item.getTitle().gettName(),
 				item.getSalary(),
-				item.getGender(),
+				(item.getGender())==Gender.FEMALE?"여자":"남자",
 				item.getDeptNo().getDeptName(),
 				item.getJoinDate()
 		};

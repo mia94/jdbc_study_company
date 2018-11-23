@@ -50,7 +50,7 @@ public class DepartmentDaoImpl implements DepartmentDao {
 			pstmt.setInt(3, item.getFloor());
 			LogUtil.prnLog(pstmt);
 			row = pstmt.executeUpdate();
-		}
+		} 
 		return row;
 	}
 
