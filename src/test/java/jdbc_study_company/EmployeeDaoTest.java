@@ -9,13 +9,16 @@ import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.BeforeClass;
+import org.junit.FixMethodOrder;
 import org.junit.Test;
+import org.junit.runners.MethodSorters;
 
 import jdbc_study_company.dao.EmployeeDao;
 import jdbc_study_company.dao.EmployeeDaoImpl;
 import jdbc_study_company.dto.Employee;
 import jdbc_study_company.jdbc.LogUtil;
 
+@FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class EmployeeDaoTest {
 	static EmployeeDao dao;
 
