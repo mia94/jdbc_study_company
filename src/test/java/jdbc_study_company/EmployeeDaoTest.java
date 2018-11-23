@@ -1,8 +1,7 @@
 package jdbc_study_company;
 
-import static org.junit.Assert.*;
-
 import java.sql.SQLException;
+import java.util.Date;
 import java.util.List;
 
 import org.junit.AfterClass;
@@ -15,7 +14,10 @@ import org.junit.runners.MethodSorters;
 
 import jdbc_study_company.dao.EmployeeDao;
 import jdbc_study_company.dao.EmployeeDaoImpl;
+import jdbc_study_company.dto.Department;
 import jdbc_study_company.dto.Employee;
+import jdbc_study_company.dto.Gender;
+import jdbc_study_company.dto.Title;
 import jdbc_study_company.jdbc.LogUtil;
 
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
@@ -46,6 +48,15 @@ public class EmployeeDaoTest {
 		List<Employee> list = dao.selectEmployeeByAll();
 		LogUtil.prnLog(list.toString());
 		Assert.assertNotNull(list);
+	}
+	
+	@Test
+	public void test02InsertEmployee() throws SQLException {
+		Employee newEmp = new Employee("E017003","너부장",new Title("T001"),4000000,Gender.FEMALE,new Department("D002"),new Date());
+		int row = dao.insertEmployee(newEmp);
+		LogUtil.prnLog("Insert row :" + row);
+		Assert.assertEquals(1, row);
+		test01selectEmployeeByAll();
 	}
 	
 	@Test

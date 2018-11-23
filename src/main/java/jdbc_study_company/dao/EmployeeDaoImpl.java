@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import org.junit.Assert;
+import javax.print.attribute.standard.PresentationDirection;
 
 import jdbc_study_company.dto.Department;
 import jdbc_study_company.dto.Employee;
@@ -49,7 +49,21 @@ public class EmployeeDaoImpl implements EmployeeDao {
 
 	@Override
 	public int insertEmployee(Employee item) throws SQLException {
-		return 0;
+		String sql = "insert into employee values(?,?,?,?,?,?,?)";
+		int row = 0;
+		try(Connection conn = ConnectionProvider.getConnection();
+				PreparedStatement pstmt = conn.prepareStatement(sql)){
+			pstmt.setString(1, item.getEmpNo());
+			pstmt.setString(2, item.getEmpName());
+			pstmt.setString(3, item.getTitle().gettNo());
+			pstmt.setInt(4, item.getSalary());
+			pstmt.setInt(5,(item.getGender())==Gender.FEMALE?0:1);
+			pstmt.setString(6, item.getDeptNo().getDeptNo());
+			pstmt.setString(7, String.format("%tF", item.getJoinDate()));//tF : date정보에서 숫자만 가져와줌
+			LogUtil.prnLog(pstmt);
+			row = pstmt.executeUpdate();
+		}
+		return row;
 	}
 
 	@Override
@@ -67,8 +81,21 @@ public class EmployeeDaoImpl implements EmployeeDao {
 
 	@Override
 	public int updateEmployee(Employee item) throws SQLException {
-		
-		return 0;
+		String sql = "update employee set empno = ?, empname = ?, title = ?,salary = ? ,gender = ?,deptno = ?, joindate = ? where empno = ? ";
+		int row = 0;
+		try(Connection conn = ConnectionProvider.getConnection();
+				PreparedStatement pstmt = conn.prepareStatement(sql)){
+			pstmt.setString(1, item.getEmpNo());
+			pstmt.setString(2, item.getEmpName());
+			pstmt.setString(3,item.getTitle().gettNo());
+			pstmt.setInt(4, item.getSalary());
+			pstmt.setInt(5,(item.getGender())==Gender.FEMALE?0:1);
+			pstmt.setString(6, item.getDeptNo().getDeptNo());
+			pstmt.setString(7, String.format("%tF", item.getJoinDate()));
+			LogUtil.prnLog(pstmt);
+			row = pstmt.executeUpdate();
+		}
+		return row;
 	}
 
 	@Override
