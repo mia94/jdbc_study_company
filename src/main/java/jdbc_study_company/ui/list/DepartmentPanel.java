@@ -11,7 +11,7 @@ public class DepartmentPanel extends AbstractPanel<Department> {
 	protected Object[] getItemrow(Department item) {
 		return new Object[] {
 			item.getDeptNo(),
-			item.getDaptName(),
+			item.getDeptName(),
 			item.getFloor()
 		};
 	}

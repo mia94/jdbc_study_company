@@ -217,7 +217,7 @@ public class DepartmentManagementUi extends JFrame implements ActionListener {
 	
 	private void setItem(Department item) {
 		tfDeptNo.setText(item.getDeptNo());
-		tfDeptName.setText(item.getDaptName());
+		tfDeptName.setText(item.getDeptName());
 		tfFloor.setText(item.getFloor() + "");
 	}
 	protected void do_btnCancel_actionPerformed(ActionEvent e) {

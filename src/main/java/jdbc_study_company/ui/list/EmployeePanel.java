@@ -20,7 +20,7 @@ public class EmployeePanel extends AbstractPanel<Employee> {
 				item.getTitle().gettName(),
 				item.getSalary(),
 				item.getGender(),
-				item.getDeptNo().getDaptName(),
+				item.getDeptNo().getDeptName(),
 				item.getJoinDate()
 		};
 	}

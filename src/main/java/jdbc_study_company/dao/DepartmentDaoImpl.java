@@ -46,7 +46,7 @@ public class DepartmentDaoImpl implements DepartmentDao {
 				PreparedStatement pstmt = connection.prepareStatement(sql)){
 
 			pstmt.setString(1, item.getDeptNo());
-			pstmt.setString(2, item.getDaptName());
+			pstmt.setString(2, item.getDeptName());
 			pstmt.setInt(3, item.getFloor());
 			LogUtil.prnLog(pstmt);
 			row = pstmt.executeUpdate();
@@ -75,7 +75,7 @@ public class DepartmentDaoImpl implements DepartmentDao {
 		int row = 0;
 		try(Connection conn = ConnectionProvider.getConnection();
 				PreparedStatement pstmt = conn.prepareStatement(sql)){
-			pstmt.setString(1, item.getDaptName());
+			pstmt.setString(1, item.getDeptName());
 			pstmt.setInt(2, item.getFloor());
 			pstmt.setString(3, item.getDeptNo());
 			LogUtil.prnLog(pstmt);

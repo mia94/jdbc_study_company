@@ -12,6 +12,7 @@ import javax.swing.JLabel;
 import javax.swing.JTextField;
 import java.awt.GridLayout;
 import java.sql.SQLException;
+import java.util.Date;
 import java.util.List;
 import java.util.Vector;
 
@@ -21,6 +22,7 @@ import javax.swing.JSpinner;
 import javax.swing.JRadioButton;
 import javax.swing.JButton;
 
+import jdbc_study_company.dto.Department;
 import jdbc_study_company.dto.Employee;
 import jdbc_study_company.dto.Title;
 import jdbc_study_company.service.EmployeeService;
@@ -41,6 +43,7 @@ public class EmployeeManagementUi extends JFrame {
 	
 	List<Employee> list;
 	private JComboBox cmbTitle;
+	private JComboBox cmbDept;
 	/**
 	 * Create the frame.
 	 */
@@ -158,7 +161,10 @@ public class EmployeeManagementUi extends JFrame {
 		lblDept.setHorizontalAlignment(SwingConstants.CENTER);
 		pInput.add(lblDept);
 		
-		JComboBox cmbDept = new JComboBox();
+		//부서 ComboBox
+		DefaultComboBoxModel<Department> deptModel = new DefaultComboBoxModel<>(new Vector<>(service.selectDeptByAll()));
+		cmbDept = new JComboBox(deptModel);
+		cmbDept.setSelectedIndex(-1);
 		pInput.add(cmbDept);
 		
 		JLabel lblNewLabel_9 = new JLabel("");
@@ -172,6 +178,7 @@ public class EmployeeManagementUi extends JFrame {
 		pInput.add(lblJoinDate);
 		
 		tfJoinDate = new JTextField();
+//		tfJoinDate.setText(now);
 		pInput.add(tfJoinDate);
 		tfJoinDate.setColumns(10);
 		
