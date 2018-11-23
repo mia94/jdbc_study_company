@@ -5,7 +5,7 @@ public class Department {
 	private String daptName;
 	private int floor;
 	
-	public Department() {
+	public Department() { 
 		
 	}
 

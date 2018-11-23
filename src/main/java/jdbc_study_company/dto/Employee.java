@@ -12,7 +12,7 @@ public class Employee {
 	private Date joinDate;
 	
 	public Employee() {
-
+ 
 	}
 	
 	public Employee(String empNo) {
