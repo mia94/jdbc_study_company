@@ -14,14 +14,14 @@ import jdbc_study_company.jdbc.LogUtil;
 public class DepartmentDaoImpl implements DepartmentDao {
 	
 	@Override
-	public List<Department> selectDepartmentByAll() {
+	public List<Department> selectDepartmentByAll() { 
 		List<Department> list = new ArrayList<>();
 		String sql = "select deptno, deptname, floor from department";
 		try(Connection conn = ConnectionProvider.getConnection();
 				PreparedStatement pstmt = conn.prepareStatement(sql);
 				ResultSet rs = pstmt.executeQuery()){
-			LogUtil.prnLog(pstmt);
-			while(rs.next()) {
+			LogUtil.prnLog(pstmt); 
+			while(rs.next()) { 
 				list.add(getDepartment(rs));
 			}
 		}catch(SQLException e) {

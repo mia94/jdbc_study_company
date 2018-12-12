@@ -24,7 +24,7 @@ public class EmployeePanel extends AbstractPanel<Employee> {
 				item.getJoinDate()
 		};
 	}
-
+ 
 	@Override
 	protected String[] getColumnName() {
 		// TODO Auto-generated method stub

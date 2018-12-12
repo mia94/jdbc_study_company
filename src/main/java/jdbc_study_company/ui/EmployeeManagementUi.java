@@ -60,7 +60,7 @@ public class EmployeeManagementUi extends JFrame implements ActionListener {
 	private JSpinner spinSalary;
 	private JRadioButton rdbtnMale;
 	private JRadioButton rdbtnFemale;
-	private final ButtonGroup buttonGroup = new ButtonGroup();
+	private final ButtonGroup buttonGroup = new ButtonGroup(); 
 	/**
 	 * Create the frame.
 	 */
